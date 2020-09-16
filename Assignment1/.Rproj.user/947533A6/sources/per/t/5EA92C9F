@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1600276664436.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1563828145",
+    "id" : "5EA92C9F",
+    "lastKnownWriteTime" : 1600280861,
+    "last_content_update" : 1600280861104,
+    "path" : "C:/Users/mahdi/OneDrive - Københavns Universitet/Advanced Bioinfo/adv_bioinfio/Assignment1/part2.R",
+    "project_path" : "part2.R",
+    "properties" : {
+        "cursorPosition" : "38,27",
+        "scrollLine" : "17"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
