@@ -1,29 +1,5 @@
 library(R.oo) #package with charToInt function to convert ascii to a value
 
-#load file
-dat <- read.delim("MTnice.pileup", as.is=T, comment.char="", head=F, quote="")
-names(dat) <- c("CHR","POS","REF", c("depth","bases","Qscore"))
-
-## bases for individual 1 as a list
-bases <- strsplit(dat$bases,"")
-
-## ascii qualities for individual 1
-asciiQ <- strsplit(dat$Qscore,"") #ascii code
-Q <- lapply(asciiQ, function(x) charToInt(x) - 33) # quality score
-errors <- lapply(Q, function(x) 10^(-x/10)) # error probability
-
-#delte useless files
-rm(dat, asciiQ, Q)
-
-## select row 2
-bases[[2]]
-## row22 col 3
-b_sub <- bases[[1]][1:10]
-e_sub <- errors[[1]][1:10]
-
-#test
-#b_sub <- c(rep("A", 5), rep("G", 5))
-
 #####functions
 get_base_probability <- function(genotype, base, error){
   #for a single genotype and a vector of bases and error,
@@ -77,18 +53,29 @@ get_new_thetas <- function(bases_vector, errors_vector){
 }
 
 
+#load file
+dat <- read.delim("MTnice.pileup", as.is=T, comment.char="", head=F, quote="")
+names(dat) <- c("CHR","POS","REF", c("depth","bases","Qscore"))
+
+## bases for individual 1 as a list
+bases <- strsplit(dat$bases,"")
+
+## ascii qualities for individual 1
+asciiQ <- strsplit(dat$Qscore,"") #ascii code
+Q <- lapply(asciiQ, function(x) charToInt(x) - 33) # quality score
+errors <- lapply(Q, function(x) 10^(-x/10)) # error probability
+
+#delte useless files
+rm(dat, asciiQ, Q)
+
+#calculate allele frequencies
+allele_freqs <- mapply(get_new_thetas, bases, errors)
+allele_freqs <- t(allele_freqs)
+colnames(allele_freqs) <- c("A", "C", "G", "T")
+head(allele_freqs)
 
 
-#get_new_thetas(bases[[2]], errors[[2]])
+allele_freqs[apply(allele_freqs, 1, max) < 0.9,]
 
-
-
-
-
-
-
-
-likelihoods <- sapply(genotypes, get_likelihood_product, b_sub, e_sub) 
-posteriors <- get_posterior(likelihoods, thetas)
 
 
