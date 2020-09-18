@@ -12,11 +12,6 @@ get_base_probability <- function(genotype, base, error){
   }
 }
 
-get_base_count <- function(genotype, reads){
-  #for a sinlge genotype, return the number of reads that match it
-  return(sum(reads == genotype))
-}
-
 get_new_thetas <- function(bases_vector, errors_vector){
   #set initial frequencies and genotypes and varibales
   thetas_new <- c(0.25, 0.25, 0.25, 0.25)

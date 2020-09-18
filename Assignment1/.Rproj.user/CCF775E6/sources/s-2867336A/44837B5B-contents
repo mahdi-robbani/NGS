@@ -1,0 +1,393 @@
+library(tidyverse)
+library(MineICA)
+source("fICA_functions.R")
+
+#functions
+test_iteration <- function(tissue, iter, var){
+  data <- subset_data(tissue, DATA, SAMPLE_ATTR)
+  data <- reduce_data(data, var)
+  K <- dim(data)[2]
+  iq_list <- list()
+  for (i in iter){
+    res <- clusterFastICARuns(X=data, nbComp=K, alg.type="parallel", 
+                              nbIt=i, funClus="hclust", method="average")
+    name <- paste0("", i)
+    iq_list[[name]] <- res$Iq
+  }
+  df <- as.data.frame(iq_list) %>% 
+    gather("Iteration", "Iq") %>% 
+    mutate("Index" = rep(1:K, length(iter)))
+  return(df)
+}
+
+test_pca <- function(tissue, iter, var){
+  data <- subset_data(tissue, DATA, SAMPLE_ATTR)
+  iq_list <- list()
+  for (i in var){
+    reduced_data <- reduce_data(data, i)
+    K <- dim(reduced_data)[2]
+    res <- clusterFastICARuns(X=reduced_data, nbComp=K, alg.type="parallel", 
+                              nbIt=iter, funClus="hclust", method="average")
+    name <- paste0("", i)
+    iq_list[[name]] <- res$Iq
+  }
+  # df <- as.data.frame(iq_list) %>% 
+  #   gather("Variance", "Iq") %>% 
+  #   mutate("Index" = rep(1:K, length(iter)))
+  return(iq_list)
+}
+
+test_fun <- function(tissue, var, iter){
+  data <- subset_data(tissue, DATA, SAMPLE_ATTR)
+  data <- reduce_data(data, var)
+  K <- dim(data)[2]
+  iq_list <- list()
+  for(i in iter){
+    res <- clusterFastICARuns(X=data, nbComp=K, alg.type="parallel", 
+                              nbIt=5, funClus="hclust", method="average",
+                              fun = i)
+    name <- i
+    iq_list[[name]] <- res$Iq
+  }
+  df <- as.data.frame(iq_list) %>% 
+    gather("Function", "Iq") %>% 
+    mutate("Index" = rep(1:K, length(iter)))
+  return(df)
+}
+
+# x <- subset_data(TISSUES[2], DATA, SAMPLE_ATTR)
+# x <- reduce_data(x, 0.9)
+# x_c <- clusterFastICARuns(X=x, nbComp=10, alg.type="parallel", 
+#                    nbIt=1, funClus="hclust", method="average")
+# 
+# 
+# modules <- apply(x_c$S, 2, get_module)
+# #df <- subset_module(tissue, tissue_modules)
+# counts <- unname(apply(modules, 2, sum))
+# #gene_count <- c(gene_count, counts)
+# t_name <- rep(TISSUES[1], length(counts))
+# var <- rep(iter, length(counts))
+# df <- tibble("Tissue" = t_name, "Gene Count" = counts,
+#              "Function" = var) #change this
+
+
+test_alg <- function(tissue, var, iter){
+  data <- subset_data(tissue, DATA, SAMPLE_ATTR)
+  data <- reduce_data(data, var)
+  K <- dim(data)[2]
+  iq_list <- list()
+  for(i in iter){
+    res <- clusterFastICARuns(X=data, nbComp=K, alg.type=i, 
+                              nbIt=5, funClus="hclust", method="average",
+                              fun = "logcosh")
+    name <- i
+    iq_list[[name]] <- res$Iq
+  }
+  df <- as.data.frame(iq_list) %>% 
+    gather("Algorithm", "Iq") %>% 
+    mutate("Index" = rep(1:K, length(iter)))
+  return(df)
+}
+
+
+test_fun_genes <- function(tissue, var, iter){
+  data <- subset_data(tissue, DATA, SAMPLE_ATTR)
+  data <- reduce_data(data, var)
+  K <- dim(data)[2]
+  df_all_tissues <- data.frame()
+  for(i in iter){
+    res <- clusterFastICARuns(X=data, nbComp=K, alg.type="parallel", 
+                              nbIt=5, funClus="hclust", method="average",
+                              fun = i)
+    name <- i
+    modules <- apply(res$S, 2, get_module)
+    counts <- unname(apply(modules, 2, sum))
+    t_name <- rep(tissue, length(counts))
+    var <- rep(name, length(counts))
+    df <- tibble("Tissue" = t_name, "Gene Count" = counts,
+                 "Function" = var) #change this
+    df_all_tissues <- rbind(df_all_tissues, df)
+  }
+  return(df_all_tissues)
+}
+
+test_alg_genes <- function(tissue, var, iter){
+  data <- subset_data(tissue, DATA, SAMPLE_ATTR)
+  data <- reduce_data(data, var)
+  K <- dim(data)[2]
+  df_all_tissues <- data.frame()
+  for(i in iter){
+    res <- clusterFastICARuns(X=data, nbComp=K, alg.type=i, 
+                              nbIt=5, funClus="hclust", method="average")
+    name <- i
+    modules <- apply(res$S, 2, get_module)
+    counts <- unname(apply(modules, 2, sum))
+    t_name <- rep(tissue, length(counts))
+    var <- rep(name, length(counts))
+    df <- tibble("Tissue" = t_name, "Gene Count" = counts,
+                 "Algorithm" = var) #change this
+    df_all_tissues <- rbind(df_all_tissues, df)
+  }
+  return(df_all_tissues)
+}
+
+test_pca_genes <- function(tissue, iter){
+  data <- subset_data(tissue, DATA, SAMPLE_ATTR)
+  if(tissue == TISSUES[3]){
+    iter <- c(0.9, 0.95)
+  }
+  df_all_tissues <- data.frame()
+  for(i in iter){
+    reduced_data <- reduce_data(data, i)
+    K <- dim(reduced_data)[2]
+    res <- clusterFastICARuns(X=reduced_data, nbComp=K, alg.type="parallel", 
+                              nbIt=5, funClus="hclust", method="average")
+    name <- i
+    modules <- apply(res$S, 2, get_module)
+    counts <- unname(apply(modules, 2, sum))
+    t_name <- rep(tissue, length(counts))
+    var <- rep(name, length(counts))
+    df <- tibble("Tissue" = t_name, "Gene Count" = counts,
+                 "Variance Captured" = var) #change this
+    df_all_tissues <- rbind(df_all_tissues, df)
+  }
+  return(df_all_tissues)
+}
+
+
+
+test_iteration_genes <- function(tissue, var, iter){
+  data <- subset_data(tissue, DATA, SAMPLE_ATTR)
+  data <- reduce_data(data, var)
+  K <- dim(data)[2]
+  df_all_tissues <- data.frame()
+  for(i in iter){
+    res <- clusterFastICARuns(X=data, nbComp=K, alg.type="parallel", 
+                              nbIt=i, funClus="hclust", method="average")
+    name <- i
+    modules <- apply(res$S, 2, get_module)
+    counts <- unname(apply(modules, 2, sum))
+    t_name <- rep(tissue, length(counts))
+    var <- rep(name, length(counts))
+    df <- tibble("Tissue" = t_name, "Gene Count" = counts,
+                 "Iterations" = var) #change this
+    df_all_tissues <- rbind(df_all_tissues, df)
+  }
+  return(df_all_tissues)
+}
+
+#load data
+DATA <- read_csv("/data/projects/data/GTEx/gtex_data_subset.csv")
+SAMPLE_ATTR <- read_delim("/data/projects/data/GTEx/GTEx_Analysis_v8_Annotations_SampleAttributesDS.txt",
+                          delim = "\t")
+
+#variables
+TISSUES <- c("Brain - Frontal Cortex (BA9)", "Kidney - Cortex", "Muscle - Skeletal")
+#iterations <-5
+#variance <- c(0.9, 0.95)
+
+#test fun
+i_iter <- c(5, 10, 15, 20)
+p_iter <- c(0.9, 0.95, 0.99)
+v_iter <- c("exp", "logcosh")
+a_iter <- c("parallel", "deflation")
+# 
+# 
+# it_genes <- data.frame()
+# for(t in TISSUES){
+#   df_tmp <- test_iteration_genes(t, 0.95, i_iter)
+#   it_genes <- cbind(it_genes, df_tmp)
+# }
+# save(it_genes, file = "it_genes.Rdata")
+
+
+#kidney_fun_genes <- test_fun_genes(TISSUES[2], 0.95, v_iter)
+# brain_fun_genes <- test_fun_genes(TISSUES[1], 0.95, v_iter)
+# muscle_fun_genes <- test_fun_genes(TISSUES[3], 0.95, v_iter)
+# fun_genes <- rbind(kidney_fun_genes, brain_fun_genes, muscle_fun_genes)
+# save(fun_genes, file = "fun_genes.Rdata")
+# #plot after this
+# load("fun_genes.Rdata")
+# f_name <- paste0("plots/", "fun_genecount", "_plot.png")
+# png(filename = f_name, width = 1800, height = 1300, res = 300)
+# ggplot(fun_genes, aes(x=Function, y=`Gene Count`)) + 
+#   geom_violin(fill="steelblue") +
+#   geom_boxplot(width=0.1) +
+#   facet_wrap(vars(Tissue))
+# dev.off()
+
+
+
+#test
+library(doParallel)
+cl <- makeCluster(20)
+registerDoParallel(cl)
+
+#pca
+it_genes <- data.frame()
+for(t in TISSUES){
+  df_tmp <- test_iteration_genes(t, 0.95, i_iter)
+  it_genes <- rbind(it_genes, df_tmp)
+}
+save(it_genes, file = "it_genes.Rdata")
+
+load("it_genes.Rdata")
+it_genes
+
+load("it_df.Rdata")
+head(it_df)
+it <- sapply(it_df$Iterations, toString)
+it[it == "5"] <- "05"
+it_df$Iterations <- it
+
+
+library(ggplot2)
+f_name <- paste0("plots/", "Iterations", "_plot.png")
+png(filename = f_name, width = 1800, height = 1300, res = 300)
+ggplot(it_df, aes(x=Index, y=Iq, col=Iterations)) +
+  geom_line() +
+  #geom_violin(fill="steelblue") +
+  #geom_boxplot(width=0.1) +
+  facet_wrap(vars(Tissue), scales = "free_x") +
+  theme(legend.position = "bottom")
+  #xlab("Iterations")
+dev.off()
+
+# load("alg_genes.Rdata")
+# head(alg_genes)
+# library(ggplot2)
+# f_name <- paste0("plots/", "alg_genecount", "_plot.png")
+# png(filename = f_name, width = 1800, height = 1300, res = 300)
+# ggplot(alg_genes, aes(x=Algorithm, y=`Gene Count`)) +
+#   geom_violin(fill="steelblue") +
+#   geom_boxplot(width=0.1) +
+#   facet_wrap(vars(Tissue))
+# dev.off()
+
+# fun_genes <- data.frame()
+# for(t in TISSUES){
+#   df_tmp <- test_fun_genes(t, 0.95, v_iter)
+#   brain_fun_genes <- cbind(brain_fun_genes, df_tmp)
+# }
+
+
+
+
+#pca
+# var_genes <- data.frame()
+# for(t in TISSUES){
+#   df_tmp <- test_pca_genes(t, p_iter)
+#   var_genes <- rbind(var_genes, df_tmp)
+# }
+# save(var_genes, file = "var_genes.Rdata")
+# 
+# load("var_genes.Rdata")
+# head(var_genes)
+# library(ggplot2)
+# f_name <- paste0("plots/", "var_genecount", "_plot.png")
+# png(filename = f_name, width = 1800, height = 1300, res = 300)
+# ggplot(var_genes, aes(x=as.factor(`Variance Captured`), y=`Gene Count`)) +
+#   geom_violin(fill="steelblue") +
+#   geom_boxplot(width=0.1) +
+#   facet_wrap(vars(Tissue)) +
+#   xlab("Variance Captured")
+# dev.off()
+
+#algorithm
+# alg_genes <- data.frame()
+# for(t in TISSUES[1:2]){
+#   df_tmp <- test_alg_genes(t, 0.95, a_iter)
+#   alg_genes <- rbind(alg_genes, df_tmp)
+# }
+# save(alg_genes, file = "alg_genes.Rdata")
+
+
+# df_tmp$exp
+# combine_list(df_tmp)
+# brain_fun_genes
+#x <- data.frame()
+#x <- rbind(x, brain_fun_genes$exp, brain_fun_genes$logcosh)
+
+# combine_list <- function(list){
+#   items <- names(list)
+#   combined_df <- data.frame()
+#   for(i in items){
+#     tmp_df <- list[[i]]
+#     combined_df <- rbind(combined_df, tmp_df)
+#   }
+#   return(combined_df)
+# }
+
+
+
+
+#brain_alg_df <- test_alg(TISSUES[1], 0.95, a_iter)
+#save(brain_alg_df,file="brain_alg_df.Rdata")
+#kidney_alg_df <- test_alg(TISSUES[2], 0.95,a_iter)
+#save(kidney_alg_df,file="kidney_alg_df.Rdata")
+#muscle_alg_df <- test_alg(TISSUES[3], 0.95, a_iter)
+#save(muscle_alg_df,file="muscle_alg_df.Rdata")
+#alg_df <- rbind(brain_alg_df, kidney_alg_df, muscle_alg_df)
+#save(alg_df,file="alg_df.Rdata")
+
+
+#test var
+#brain_var_list <- test_pca(TISSUES[1], iterations, variance)
+#save(brain_var_list,file="brain_var_list.Rdata")
+#kidney_var_list <- test_pca(TISSUES[2], iterations, variance)
+#save(kidney_var_list,file="kidney_var_list.Rdata")
+#muscle_var_list <- test_pca(TISSUES[3], iterations, variance)
+#save(muscle_var_list,file="muscle_var_list.Rdata")
+
+#load("muscle_var_list.Rdata")
+
+
+
+# sub <- subset_data(TISSUES[1], DATA, SAMPLE_ATTR)
+# iq_list <- list()
+# reduced_data <- reduce_data(sub, 0.9)
+# K <- dim(reduced_data)[2]
+# res <- clusterFastICARuns(X=reduced_data, nbComp=K, alg.type="parallel", 
+#                           nbIt=5, funClus="hclust", method="average")
+# 
+# for (i in var){
+#   reduced_data <- reduce_data(data, i)
+#   K <- dim(reduced_data)[2]
+#   res <- clusterFastICARuns(X=reduced_data, nbComp=K, alg.type="parallel", 
+#                             nbIt=iter, funClus="hclust", method="average")
+#   name <- paste0("", i)
+#   iq_list[[name]] <- res$Iq
+# }
+
+
+
+
+
+
+# #test iterations
+# # brain_it_df <- test_iteration("Brain - Frontal Cortex (BA9)", iterations, 0.95)
+# # save(brain_it_df,file="brain_it_df.Rdata")
+# # kidney_it_df <- test_iteration("Kidney - Cortex", iterations, 0.95)
+# # save(kidney_it_df,file="kidney_it_df.Rdata")
+# muscle_it_df <- test_iteration("Muscle - Skeletal", iterations, 0.95)
+# save(muscle_it_df,file="muscle_it_df_20.Rdata")
+# 
+# #load in case it fails and plot
+# load("brain_it_df.Rdata")
+# brain_it_df <- brain_it_df %>% mutate("tissue" = "Brain")
+# # brain_it_df %>% 
+# #   ggplot(aes(x=Index, y=Iq, color = Iteration)) + geom_line() 
+# load("kidney_it_df.Rdata")
+# kidney_it_df <- kidney_it_df %>% mutate("tissue" = "Kidney")
+# # kidney_it_df %>% 
+# #   ggplot(aes(x=Index, y=Iq, color = Iteration)) + geom_line()
+# load("muscle_it_df.Rdata")
+# muscle_it_df_1 <- muscle_it_df %>% mutate("tissue" = "Muscle")
+# load("muscle_it_df_20.Rdata")
+# muscle_it_df_20 <- muscle_it_df %>% mutate("tissue" = "Muscle")
+# # muscle_it_df %>%
+# #   ggplot(aes(x=Index, y=Iq, color = Iteration)) + geom_line()
+# it_df <- rbind(brain_it_df, kidney_it_df, muscle_it_df_1, muscle_it_df_20)
+# save(it_df,file="it_df.Rdata")
+
+

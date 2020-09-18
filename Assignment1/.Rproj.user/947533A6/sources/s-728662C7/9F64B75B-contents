@@ -1,0 +1,168 @@
+library(R.oo) #package with charToInt function to convert ascii to a value
+
+r <- read.delim("MTnice.pileup",as.is=T,head=F, quote="")
+bases <- strsplit(r[,5],"")
+quality <- strsplit(r[,6],"")
+fun <- function(x){
+  y <- R.oo::charToInt(x)-33 #offset
+  10^(-y/10)
+}
+quality <- lapply(quality,fun)
+quality[[1]]
+dat <- read.delim("MTnice.pileup",as.is=T,comment.char="",head=F, quote="")
+names(dat) <- c("CHR","POS","REF",c("depth","bases","Qscore"))
+head(dat,2)
+
+
+## bases for individual 1 as a list
+bases <- strsplit(toupper(dat$bases),"")
+## bases for site 2 (note the [[ notation for lists)
+bases[[2]]
+## base on read 3 for for site 2
+bases[[2]][3]
+## ascii qualities for individual 1
+asciiQ <- strsplit(dat$Qscore,"")
+## quality values values
+Q <- lapply(asciiQ,function(x) R.oo::charToInt(x) - 33 )
+quality[[1]][100]
+
+
+# Function to return the error probability
+get_error <- function(q_score){
+  return(10^(-q_score/10))
+}
+Q = lapply(Q, get_error)
+
+# ## Genotype likelihood
+# # Get likelihood of a given genotype for 1 position
+# get_lik <- function(genotype, bases, quality){
+#   vec_lik <- c()
+#   for (i in 1:length(bases)){
+#     # If genotype match to base
+#     if (genotype == bases[i]){
+#       P_BgivG <- 1 - quality[i]
+#     }
+#     # If genotype not match to base
+#     else{
+#       P_BgivG <- quality[i]/3
+#     }
+#     vec_lik <- c(vec_lik, P_BgivG)
+#   } 
+#   return(prod(vec_lik))
+# }
+
+ls()
+remove(list=ls())
+# Genegerate toy bases and quality data
+bases_toy <- list()
+Q_toy <- list()
+for (i in 1:20){
+  b <- round(runif(1, min=5, max=30))
+  Q_toy[[i]] <- Q[[i]][1:(20+b)]
+  bases_toy[[i]] <- bases[[i]][1:(20+b)]
+  print(i+b)
+  print(bases[[i]][1:i+b])
+}
+bases_toy
+
+
+# Likelihood functions
+lik <- function(genotype, bases, quality){
+  ifelse(genotype==bases, lik_A <- 1-quality, lik_A <- quality/3)
+}
+lik_vec <- Vectorize(lik, vectorize.args = c("bases","quality") )
+
+# Function to calculate likelihood for all positions
+generate_lik <- function(bases, quality){
+  lik_A <- sapply(lik_vec(genotype="A", bases, quality), prod)
+  lik_C <- sapply(lik_vec(genotype="C", bases, quality), prod)
+  lik_G <- sapply(lik_vec(genotype="G", bases, quality), prod)
+  lik_T <- sapply(lik_vec(genotype="T", bases, quality), prod)
+  return (list(A=lik_A, C=lik_C, G=lik_G, T=lik_T))
+}
+
+# Base counts 
+b_count <- function(bases, genotype){
+  ifelse(genotype==bases, 1, 0)
+}
+generate_bcounts <- function(bases){
+  count_A <- lapply(sapply(bases, b_count, "A"), sum)
+  count_C <- lapply(sapply(bases, b_count, "C"), sum)
+  count_G <- lapply(sapply(bases, b_count, "G"), sum)
+  count_T <- lapply(sapply(bases, b_count, "T"), sum)
+  return (list(A=count_A, C=count_C, G=count_G, T=count_T))
+}
+
+# Expectation maximization for one position
+EMfreqStep <- function(p, glik, bcounts){
+  # Initialize theta
+  f <- rep(0)
+  fTemp <- rep(0.25, 4)
+  # Set the iterations counter
+  c <- 1
+  # Iterate until convergence
+  while(any(abs(f-fTemp) > 0.0001)){
+    f <- fTemp
+    writeLines("\n")
+    print(paste("EM at position", p))
+    # Genotypes likelihood (probability of data given genotype)
+    print("Likelihood")
+    print(c(glik$A[p], glik$C[p], glik$G[p], glik$T[p]))
+    # If the genotypes likelihood are all rounded to zeros (overflow problem)
+    if (sum(glik$A[p], glik$C[p], glik$G[p], glik$T[p]) == 0){
+      fTemp <- rep(0, 4)
+    }
+    # If it was possible to compute the likelihood
+    else{
+      # Q-Step, posterior (probability of genotype given data and estimated freq)
+      qi_num <- c(glik$A[p]*f[1], glik$C[p]*f[2], glik$G[p]*f[3], glik$T[p]*f[4])
+      posts <- qi_num / sum(qi_num)
+      print("Q-Step, posteriors")
+      print(posts)
+      
+      # M-Step
+      
+      # JB method
+      normalizer <- sum(posts)
+      writeLines("\n")
+      print("M-Step, ML of theta")
+      fTemp1 <- c(posts[1], posts[2], posts[3], posts[4]) / normalizer
+      # Ste method
+      expected <- c(bcounts$A[[p]]*posts[1],bcounts$C[[p]]*posts[2], bcounts$G[[p]]*posts[3], bcounts$T[[p]]*posts[4])
+      total_expected <- sum(expected)
+      
+      fTemp <- c(expected / total_expected)
+      print("fTemp_JB")
+      print(fTemp1)
+      print("fTemp_ste")
+      print(fTemp)
+    }
+    print(paste("End iteration", c))
+    print(fTemp)
+    c <- c+1
+  }
+  print(paste("End EM at position",p))
+  print("fTemp")
+  print(fTemp)
+}
+
+gen_lik <- generate_lik(bases_toy, Q_toy)
+bcounts <- generate_bcounts(bases_toy)
+
+gen_lik <- generate_lik(bases, Q)
+bcounts <- generate_bcounts(bases)
+
+for (p in 1:length(gen_lik$A)){
+  EMfreqStep(p, gen_lik, bcounts) 
+  print("Position")
+  print(p)
+}
+
+theta <- data.frame(cbind(
+  q_i$A / sum(q_i[1, ]),
+  q_i$C / sum(q_i[1, ]),
+  q_i$T / sum(q_i[1, ]),
+  q_i$G / sum(q_i[1, ])
+))
+
+
