@@ -36,7 +36,6 @@ get_new_thetas <- function(bases_vector, errors_vector){
     
     #E Step 
     #calculate posterior
-    #numerators <- mapply(base_probabilities, as.list(thetas), FUN= function(x, y) x*y)
     numerators <- mapply(function(x, y) x*y, base_probabilities, as.list(thetas))
     denominator <- apply(numerators, 1, sum)
     posterior <- numerators/denominator
@@ -44,22 +43,28 @@ get_new_thetas <- function(bases_vector, errors_vector){
     #print(posterior)
     
     #M Step
-    #calculate new thetas
+    #calculate posterior*base_count
     numerators <- as.data.frame(posterior)
     colnames(numerators) <- genotypes
     numerators <- as.list(numerators)
     numerators <- mapply(function(x, y) x*y, numerators, base_counts)
     numerators <- apply(numerators, 2, sum)
     denominator <- sum(numerators)
-    print("numerators2")
-    print(numerators)
-    print("den")
-    print(denominator)
-    thetas_new <- numerators/denominator
+    # print("numerators2")
+    # print(numerators)
+    # print("den")
+    # print(denominator)
+    
+    #check for nan errors and calculate new thetas
+    if (is.nan(denominator) | denominator == 0){
+      thetas_new <- c(0, 0, 0, 0)
+      break
+    } else{
+      thetas_new <- numerators/denominator
+    }
     difference <- max(abs(thetas_new - thetas))
     iteration <- iteration + 1
     
-    #print
     # print("iteration")
     # print(iteration)
     # print("theta old, theta new")
@@ -71,10 +76,6 @@ get_new_thetas <- function(bases_vector, errors_vector){
   
   return(thetas_new)
 }
-
-#test_new_thetas
-get_new_thetas(bases[[1]][1:10], errors[[1]][1:10])
-
 
 #load file
 dat <- read.delim("MTnice.pileup", as.is=T, comment.char="", head=F, quote="")
@@ -91,15 +92,9 @@ errors <- lapply(Q, function(x) 10^(-x/10)) # error probability
 #delte useless files
 rm(dat, asciiQ, Q)
 
-# #test_new_thetas
-# get_new_thetas(bases[[1]][1:10], errors[[1]][1:10])
-
-
 #calculate allele frequencies
 allele_freqs <- mapply(get_new_thetas, bases, errors)
 allele_freqs <- t(allele_freqs)
-colnames(allele_freqs) <- c("A", "C", "G", "T")
-head(allele_freqs)
 
-
-allele_freqs[apply(allele_freqs, 1, max) < 0.9,]
+uncertain_sites <- allele_freqs[apply(allele_freqs, 1, max) < 0.9,]
+dim(uncertain_sites)
