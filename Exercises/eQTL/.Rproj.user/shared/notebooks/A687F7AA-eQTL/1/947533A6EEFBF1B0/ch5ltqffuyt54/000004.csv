@@ -1,0 +1,8 @@
+"0","filter <- maf <0.05 | missing_count > 0"
+"0","snps_filtered <- snps[filter,]"
+"0","dim(snps_filtered)"
+"1","[1]"
+"1","   7"
+"1"," 462"
+"1","
+"

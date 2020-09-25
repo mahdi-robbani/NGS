@@ -1,0 +1,61 @@
+---
+title: "qQTL exercise"
+author: "Mahdi"
+date: "September 25, 2020"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Understanding the data
+
+## Task 1
+1. In the `sub_geno.tab` file, 0, 1 and 2 most likely represent the two homozygous and hgeteroguzous genotypes. -1 probably means missing data.
+2. In the `sub_expr.tab` file, the rows are genes/transcripts and the columns are different samples and their gene expression values.
+3. The `design.tab` file contains information about each column of the `sub_expr.tab` file. It says which population they belong to and other characteristics.
+
+## Task 2
+1. Calculate the number of missing genotypes for each SNP across all individuals.
+```{r}
+snps <- read.table("sub_geno.tab")
+missing_count <- apply((snps == -1), 1, sum)
+head(missing_count)
+```
+
+2. Calculate the minor allele frequency (MAF) for all SNPs across all individuals.
+```{r}
+get_geno_frequency <- function(geno, snp_mat){
+  boolean_matrix <- snp_mat == geno
+  count <- apply(boolean_matrix, 1, sum)
+  freq <- count/dim(snps)[2]
+  return (freq)
+}
+
+get_maf <- function(snp_mat){
+  genotypes <- c(0,1,2)
+  #get matrix of genotype frequencies
+  geno_freq <- sapply(genotypes, get_geno_frequency, snp_mat)
+  colnames(geno_freq) <- genotypes
+  allele_freq <- geno_freq + geno_freq[,2]/2
+  allele_freq <- allele_freq[,-2]
+  maf <- apply(allele_freq, 1, min)
+  return (maf)
+}
+
+maf <- get_maf(snps)
+```
+
+3. Filter our SNPs that have missing genotypes or a MAF<0.05 and use the filtered snps for the rest of the exercise.
+```{r}
+filter <- maf <0.05 | missing_count > 0
+snps_filtered <- snps[filter,]
+dim(snps_filtered)
+```
+
+4. Calculate the MAF for africans and non-africans separately. Is there a difference?
+```{r}
+
+```
+

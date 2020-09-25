@@ -1,0 +1,29 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1601020397273.000,
+    "dirty" : false,
+    "encoding" : "",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "E40B81C7",
+    "lastKnownWriteTime" : 7310584039690565225,
+    "last_content_update" : 1601020397273,
+    "path" : null,
+    "project_path" : null,
+    "properties" : {
+        "cacheKey" : "A1BA2767",
+        "caption" : "snps",
+        "contentUrl" : "grid_resource/gridviewer.html?env=&obj=snps&cache_key=A1BA2767",
+        "displayedObservations" : "39",
+        "environment" : "",
+        "object" : "snps",
+        "preview" : "0",
+        "totalObservations" : "39",
+        "variables" : "462"
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_dataframe"
+}
