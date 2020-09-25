@@ -45,16 +45,60 @@ get_maf <- function(snp_mat){
 }
 
 maf <- get_maf(snps)
+head(maf)
 ```
 
 3. Filter our SNPs that have missing genotypes or a MAF<0.05 and use the filtered snps for the rest of the exercise.
 ```{r}
-filter <- maf <0.05 | missing_count > 0
-snps_filtered <- snps[filter,]
+keep <- maf >= 0.05 & missing_count == 0
+snps_filtered <- snps[keep,]
 dim(snps_filtered)
 ```
 
 4. Calculate the MAF for africans and non-africans separately. Is there a difference?
+```{r}
+design <- read.table("design.tab", header = T, sep = "\t")
+
+filter_snp_population <- function(pop, snp_mat, design_mat, inv=F){
+  if(inv){
+    cols <- design_mat$Source.Name[design_mat$Characteristics.population. != pop]
+  } else{
+    cols <- design_mat$Source.Name[design_mat$Characteristics.population. == pop]
+  }
+  snp_mat <- (snp_mat[, cols])
+  return(snp_mat)
+}
+
+african_snps <- filter_snp_population("YRI", snps_filtered, design)
+non_african_snps <- filter_snp_population("YRI", snps_filtered, design, inv = T)
+
+african_maf <- get_maf(african_snps)
+non_african_maf <- get_maf(non_african_snps)
+print("African")
+print(head(african_maf))
+print("Non-African")
+print(head(non_african_maf))
+```
+
+Yes, there is a difference between the two groups.
+
+## Task 3
+1. Plot the distribution of expression levels across all samples for the ENSG00000172404.4 gene.
+```{r}
+library(tidyverse)
+gene_expr <- read.table("sub_expr.tab")
+gene_expr %>%
+  t %>%
+  as_tibble() %>%
+  #rownames_to_column("Gene") %>%
+  select(ENSG00000172404.4) %>%
+  #select(-Gene) %>%
+  ggplot(aes(x=ENSG00000172404.4)) + geom_density() #+ geom_histogram()
+
+```
+
+2. Plot the expression levels of ENSG00000172404.4 against the genotypes of snp_22_41256802 and
+snp_22_45782142
 ```{r}
 
 ```

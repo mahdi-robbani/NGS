@@ -50,7 +50,7 @@ head(maf)
 
 3. Filter our SNPs that have missing genotypes or a MAF<0.05 and use the filtered snps for the rest of the exercise.
 ```{r}
-keep <- maf > 0.05 & missing_count == 0
+keep <- maf >= 0.05 & missing_count == 0
 snps_filtered <- snps[keep,]
 dim(snps_filtered)
 ```
@@ -81,3 +81,25 @@ print(head(non_african_maf))
 ```
 
 Yes, there is a difference between the two groups.
+
+## Task 3
+1. Plot the distribution of expression levels across all samples for the ENSG00000172404.4 gene.
+```{r}
+library(tidyverse)
+gene_expr <- read.table("sub_expr.tab")
+gene_expr %>%
+  t %>%
+  as_tibble() %>%
+  #rownames_to_column("Gene") %>%
+  select(ENSG00000172404.4) %>%
+  #select(-Gene) %>%
+  ggplot(aes(x=ENSG00000172404.4)) + geom_density() #+ geom_histogram()
+
+```
+
+2. Plot the expression levels of ENSG00000172404.4 against the genotypes of snp_22_41256802 and
+snp_22_45782142
+```{r}
+
+```
+
