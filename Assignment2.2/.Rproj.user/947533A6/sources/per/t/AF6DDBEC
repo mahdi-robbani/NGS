@@ -5,16 +5,16 @@
     "dirty" : false,
     "encoding" : "UTF-8",
     "folds" : "",
-    "hash" : "723966939",
+    "hash" : "1528926753",
     "id" : "AF6DDBEC",
-    "lastKnownWriteTime" : 1601130334,
-    "last_content_update" : 1601130334779,
+    "lastKnownWriteTime" : 1601134840,
+    "last_content_update" : 1601134840870,
     "path" : "C:/Users/mahdi/OneDrive - Københavns Universitet/Advanced Bioinfo/adv_bioinfio/Assignment2.2/Part1.Rmd",
     "project_path" : "Part1.Rmd",
     "properties" : {
-        "cursorPosition" : "125,176",
-        "last_setup_crc32" : "893F7319bb338d19",
-        "scrollLine" : "117"
+        "cursorPosition" : "25,0",
+        "last_setup_crc32" : "",
+        "scrollLine" : "0"
     },
     "relative_order" : 1,
     "source_on_save" : false,

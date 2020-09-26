@@ -1,5 +1,5 @@
-"0","summary(lm_snp_a)
-"
+"0","lm_snp_a <- lm(gene1_col ~ snps1_col[,1])"
+"0","summary(lm_snp_a)"
 "1","
 Call:
 "

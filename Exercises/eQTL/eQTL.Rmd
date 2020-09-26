@@ -85,25 +85,42 @@ Yes, there is a difference between the two groups.
 ## Task 3
 1. Plot the distribution of expression levels across all samples for the ENSG00000172404.4 gene.
 ```{r}
-library(tidyverse)
 gene_expr <- read.table("sub_expr.tab")
-head(gene_expr)
 gene1 <- c("ENSG00000172404.4")
-gene_expr %>%
-  t %>%
-  as_tibble() %>%
-  #rownames_to_column("Gene") %>%
-  select(ENSG00000172404.4) %>%
-  #select(-Gene) %>%
-  ggplot(aes(x=ENSG00000172404.4)) + geom_histogram()
-
-hist(as.matrix(gene_expr[gene1,]))
+hist(as.matrix(gene_expr[gene1,]), main=gene1, xlab="Gene Expression Level")
 
 ```
 
-2. Plot the expression levels of ENSG00000172404.4 against the genotypes of snp_22_41256802 and
-snp_22_45782142
+2. Plot the expression levels of ENSG00000172404.4 against the genotypes of snp_22_41256802 and snp_22_45782142
 ```{r}
+library(tidyverse)
+snps1 <- c("snp_22_41256802", "snp_22_45782142")
+gene1_col <- t(gene_expr[gene1,])
+snps1_col <- t(snps_filtered[snps1,])
+df <- cbind(snps1_col, gene1_col)
+colnames(df) <- c(snps1, "expression")
+df <- df %>% 
+  as_tibble %>%
+  gather(-expression, key="SNP", value ="genotype")
+df$genotype <- as.factor(df$genotype)
+df %>%
+  ggplot(aes(x=genotype, y=expression)) + geom_boxplot() +
+  facet_wrap(~SNP)
 
 ```
 
+## Task 4
+1. Do a linear regression of all sample genotypes on sample gene expression for snp_22_41256802 on ENSG00000172404.4
+```{r}
+lm_snp_a <- lm(gene1_col ~ snps1_col[,1])
+summary(lm_snp_a)
+```
+
+2. Do a linear regression of all sample genotypes on sample gene expression for snp_22_45782142 on ENSG00000172404.4
+```{r}
+lm_snp_b <- lm(gene1_col ~ snps1_col[,2])
+summary(lm_snp_b)
+```
+
+3. Make sense of the results (Understand what the values represent)
+Gene expression levels can be explained by the first SNP but not the second. This is because the first SNP has a very small p value for its coefficient meaning the the relationship did not occur by chance. In contrast the second SNP has a high P value so it most likely occured by chance.
