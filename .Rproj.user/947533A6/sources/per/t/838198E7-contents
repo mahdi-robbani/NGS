@@ -1,0 +1,31 @@
+dir <- "Assignment1/"
+r <- read.delim(paste0(dir, "MTnice.pileup"), as.is=T, head=F)
+
+bases <- strsplit(r[,5], "")
+quality <- strsplit(r[,6], "")
+
+
+fun<-function(x){
+  y <- R.oo::charToInt(x)-33 #offset
+  10^(-y/10)
+}
+quality<-lapply(quality,fun)
+quality[[1]]
+dat <- read.delim("MTnice.pileup",as.is=T,comment.char="",head=F)
+names(dat) <- c("CHR","POS","REF",c("depth","bases","Qscore"))
+head(dat,1)
+library(R.oo) #package with charToInt function to convert ascii to a value
+## bases for individual 1 as a list
+bases <- strsplit(dat$bases,"")
+## bases for site 2 (note the [[ notation for lists)
+bases[[2]]
+## base on read 3 for for site 2
+bases[[2]][3]
+## ascii qualities for individual 1
+asciiQ <- strsplit(dat$Qscore,"")
+## quality values values
+Q <- lapply(asciiQ,function(x) R.oo::charToInt(x) - 33 )
+## quality for site 2
+Q[[2]]
+## qualty values for base on read 3 for site 2
+Q[[2]][3]

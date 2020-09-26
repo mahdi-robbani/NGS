@@ -1,0 +1,8 @@
+t(snps_filtered[snps1,]) %>% head
+t(gene_expr[gene1,]) %>% dim
+df <- df %>% 
+  as_tibble %>%
+  gather(-expression, key="SNP", value ="genotype")
+snps_filtered %>% t %>% head
+gene1_col
+snps1_col[,1] %>% head

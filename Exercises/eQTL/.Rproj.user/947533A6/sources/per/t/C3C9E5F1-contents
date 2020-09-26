@@ -87,13 +87,17 @@ Yes, there is a difference between the two groups.
 ```{r}
 library(tidyverse)
 gene_expr <- read.table("sub_expr.tab")
+head(gene_expr)
+gene1 <- c("ENSG00000172404.4")
 gene_expr %>%
   t %>%
   as_tibble() %>%
   #rownames_to_column("Gene") %>%
   select(ENSG00000172404.4) %>%
   #select(-Gene) %>%
-  ggplot(aes(x=ENSG00000172404.4)) + geom_density() #+ geom_histogram()
+  ggplot(aes(x=ENSG00000172404.4)) + geom_histogram()
+
+hist(as.matrix(gene_expr[gene1,]))
 
 ```
 
