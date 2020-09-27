@@ -1,0 +1,6 @@
+rownames(pc) == design$Source.Name
+design$Characteristics.population.
+pc_df %>%
+  #gather(-Population, key="PC", value="Value") %>%
+  ggplot(aes(x=PC1, y=PC2, col=Population)) + 
+  geom_point()
