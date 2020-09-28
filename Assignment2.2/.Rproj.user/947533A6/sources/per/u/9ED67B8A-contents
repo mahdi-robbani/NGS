@@ -1,0 +1,86 @@
+rownames(pc) == design$Source.Name
+design$Characteristics.population.
+pc_df %>%
+  #gather(-Population, key="PC", value="Value") %>%
+  ggplot(aes(x=PC1, y=PC2, col=Population)) + 
+  geom_point()
+
+
+
+lm(gene2_col ~ gene2_snp)
+
+g <- t(gene_expr)
+s <- t(snps_filtered)
+
+x<- lm(g[,1] ~ s[,1])
+summary(x)
+
+library(tidyverse)
+y <- broom::tidy(x)
+y
+
+x$model
+y<- lm(g ~ s)
+x <- summary(y)
+x$`Response ENSG00000185386.10`
+x$coefficients
+
+
+x<- lm(g[,1] ~ s[,1])
+x <- summary(x)
+x$coefficients
+
+x <- get_lm_matrix(gene_t, snps_filtered_t, get_lm_values)
+
+summary(lm(gene_t$ENSG00000185386.10 ~ snps_filtered_t$snp_22_30772686))$coefficients[2,]
+
+
+
+
+
+q <- lapply(gene_t, get_values, snps_filtered_t)
+q <- mapply(get_values, gene_t, snps_filtered_t)
+t(q)[1,]
+
+dim(gene_t)
+dim(lm_matrix)
+dim(pc)
+
+x<- lm(g[,1] ~ s[,1] + pc$PC1)
+summary(x)
+
+t(lm_matrix_cov)
+
+
+lm_matrix_cov %>%
+  filter(p.adj == min(lm_matrix_cov$p.adj))
+
+snps1 <- c("snp_22_41256802", "snp_22_45782142")
+gene1_col <- t(gene_expr[gene1,])
+snps1_col <- t(snps_filtered[snps1,])
+df <- cbind(snps1_col, gene1_col)
+colnames(df) <- c(snps1, "expression")
+df <- df %>% 
+  as_tibble %>%
+  gather(-expression, key="SNP", value ="genotype")
+df$genotype <- as.factor(df$genotype)
+df
+
+lm_matrix_cov[lm_matrix_cov$p.adj == min(lm_matrix_cov$p.adj),]
+
+df <- data.frame(Expression = gene_t[,sig_row$gene_id], 
+                 Genotype = as.factor(snps_filtered_t[,sig_row$snp_id]))
+
+df %>% 
+  ggplot(aes(x=Genotype, y=Expression)) + geom_boxplot()
+
+dim(gene_expr[sig_row$gene_id,])
+dim(snps_filtered[sig_row$snp_id,])
+as.vector(gene_expr[sig_row$gene_id,])
+
+
+lm_matrix_cov %>%
+  filter(p.adj < 0.05)
+
+lm_matrix %>%
+  filter(p.adj < 0.05)

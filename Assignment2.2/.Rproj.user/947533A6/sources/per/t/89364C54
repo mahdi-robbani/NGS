@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1601133878256.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3733384069",
+    "id" : "89364C54",
+    "lastKnownWriteTime" : 1601214692,
+    "last_content_update" : 1601214692785,
+    "path" : "C:/Users/mahdi/OneDrive - Københavns Universitet/Advanced Bioinfo/adv_bioinfio/Exercises/eQTL/eQTL.Rmd",
+    "project_path" : null,
+    "properties" : {
+        "cursorPosition" : "106,2",
+        "last_setup_crc32" : "471FB6DEbb338d19",
+        "scrollLine" : "93"
+    },
+    "relative_order" : 5,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

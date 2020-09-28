@@ -1,0 +1,5 @@
+"0","sig_row <- lm_matrix_cov[lm_matrix_cov$p.adj == min(lm_matrix_cov$p.adj),]"
+"0","df <- data.frame(Expression = gene_t[,sig_row$gene_id], "
+"0","                 Genotype = as.factor(snps_filtered_t[,sig_row$snp_id]))"
+"0","df %>% "
+"0","  ggplot(aes(x=Genotype, y=Expression)) + geom_boxplot()"

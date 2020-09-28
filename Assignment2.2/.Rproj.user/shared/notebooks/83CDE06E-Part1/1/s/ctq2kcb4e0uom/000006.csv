@@ -1,0 +1,58 @@
+"0","library(MatrixEQTL)"
+"0","snps <- SlicedData$new()"
+"0","snps$CreateFromMatrix(as.matrix(snps_filtered)) #filt_geno is your filtered genotype matrix"
+"0","genes <- SlicedData$new()"
+"0","genes$CreateFromMatrix(as.matrix(gene_expr)) #expr is the unchanged expression matrix"
+"0","snp_pos <- read.table(""sample_geno.pos"",sep=""\t"",header=T)"
+"0","snp_pos <- snp_pos[snp_pos$snp %in% row.names(snps_filtered),]"
+"0","gene_pos <- read.table(""sample_expr.pos"",sep=""\t"",header=T)"
+"0","all(colnames(snps) == colnames(genes))"
+"1","[1]"
+"1"," TRUE"
+"1","
+"
+"0","eQTL <- Matrix_eQTL_main(snps, genes, output_file_name=NULL,"
+"0","output_file_name.cis=NULL,"
+"0","pvOutputThreshold.cis=1, pvOutputThreshold=1,"
+"0","snpspos=snp_pos, genepos=gene_pos,"
+"0","cisDist = 0)"
+"2","Matching data files and location files
+"
+"2","32 of 32 genes matched
+"
+"2","32 of 32 SNPs matched
+
+"
+"2","Task finished in 0.01 seconds
+"
+"2","Reordering SNPs
+"
+"2","Task finished in 0.25 seconds
+"
+"2","Reordering genes
+"
+"2","Task finished in 0.27 seconds
+"
+"2","Processing covariates
+"
+"2","Task finished in 0.01 seconds
+"
+"2","Processing gene expression data (imputation, residualization)
+"
+"2","Task finished in 0.02 seconds
+"
+"2","Creating output file(s)
+"
+"2","Task finished in 0.02 seconds
+"
+"2","Performing eQTL analysis
+"
+"2","100.00% done, 0 cis-eQTLs, 1,024 trans-eQTLs
+"
+"2","No significant associations were found.
+
+"
+"2","Task finished in 0.03 seconds
+"
+"2","
+"
