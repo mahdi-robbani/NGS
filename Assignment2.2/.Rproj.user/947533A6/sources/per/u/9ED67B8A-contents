@@ -1,86 +1,96 @@
-rownames(pc) == design$Source.Name
-design$Characteristics.population.
-pc_df %>%
-  #gather(-Population, key="PC", value="Value") %>%
-  ggplot(aes(x=PC1, y=PC2, col=Population)) + 
-  geom_point()
 
 
+dim(expr_ceu_20)
+head(expr_ceu_20[,91])
 
-lm(gene2_col ~ gene2_snp)
 
-g <- t(gene_expr)
-s <- t(snps_filtered)
+snp_ceu_20[1:5,1:5]
+af
+head(af)
+head(allele_freq)
 
-x<- lm(g[,1] ~ s[,1])
-summary(x)
+
+expr_ceu_20[1:5,1:5]
+dim(expr_ceu_20)
+mean_expr <-apply(expr_ceu_20[,-1], 1 , mean)
+expr_ceu_20[mean_expr == max(mean_expr),1]
+
+
+head(cis_eqtls)
+cis_eqtls[cis_eqtls$p.adj== min(cis_eqtls$p.adj),]
+
+?p.adjust
+
+head(me$cis$eqtls)
+head(cis_eqtls)
+
+p.adjust(trans_eqtls$pvalue, method = "bonferroni")
+
+head(trans_eqtls)
+qqp(cis_eqtls$pvalue)
+qqp(trans_eqtls$pvalue)
+head(maf)
+head(cis_eqtls)
+head(snp_ceu_20[,1:5])
+
+df <- data.frame("id" = snp_ceu_20$id, "maf" = get_maf(snp_ceu_20))
+x <- data.frame("id" = cis_eqtls$snps)
+head(y)
+y <- merge(x, df)
+y
+head(df)
+length(unique(cis_eqtls$snps))
+head()
+
+head(cis_eqtls)
 
 library(tidyverse)
-y <- broom::tidy(x)
-y
+cis_eqtls %>%
+  arrange(gene, snps) %>%
+  head
+snp_ceu_20 %>%
+  arrange(id) %>%
+  select(id) %>%
+  head
 
-x$model
-y<- lm(g ~ s)
-x <- summary(y)
-x$`Response ENSG00000185386.10`
-x$coefficients
+find_maf <- function(snp, maf_df){
+  return(maf_df$maf[maf_df$id == snp])
+}
 
+x <- sapply(cis_eqtls$snps, find_maf, maf_df)
 
-x<- lm(g[,1] ~ s[,1])
-x <- summary(x)
-x$coefficients
+maf_df$maf[maf_df$id == snp_ceu_20$id[10000]]
 
-x <- get_lm_matrix(gene_t, snps_filtered_t, get_lm_values)
-
-summary(lm(gene_t$ENSG00000185386.10 ~ snps_filtered_t$snp_22_30772686))$coefficients[2,]
-
-
+head(cis_eqtls)
 
 
+cis_eqtls %>%
+  arrange(gene, snps) %>%
+  head
 
-q <- lapply(gene_t, get_values, snps_filtered_t)
-q <- mapply(get_values, gene_t, snps_filtered_t)
-t(q)[1,]
-
-dim(gene_t)
-dim(lm_matrix)
-dim(pc)
-
-x<- lm(g[,1] ~ s[,1] + pc$PC1)
-summary(x)
-
-t(lm_matrix_cov)
+cis_eqtls %>%
+  arrange(snps) %>%
+  head
+head(c)
+x <- merge(c, maf_df)
 
 
-lm_matrix_cov %>%
-  filter(p.adj == min(lm_matrix_cov$p.adj))
+q <- data.frame("id" = cis_eqtls$snps)
+maf_df <- data.fram e("id" = snp_ceu_20$id, "maf" = get_maf(snp_ceu_20))
+x <- merge(q, maf_df, by="id", all.x = T)
+head(x)
+dim(x)
+sum(cis_eqtls$snps == x$id)
 
-snps1 <- c("snp_22_41256802", "snp_22_45782142")
-gene1_col <- t(gene_expr[gene1,])
-snps1_col <- t(snps_filtered[snps1,])
-df <- cbind(snps1_col, gene1_col)
-colnames(df) <- c(snps1, "expression")
-df <- df %>% 
-  as_tibble %>%
-  gather(-expression, key="SNP", value ="genotype")
-df$genotype <- as.factor(df$genotype)
-df
+head(cis_eqtls)
+head(temp_df)
+head(cis_eqtls)
+snp_ceu_20[1:5, 1:5]
+dim(snp_ceu_20)[2] - 1
 
-lm_matrix_cov[lm_matrix_cov$p.adj == min(lm_matrix_cov$p.adj),]
-
-df <- data.frame(Expression = gene_t[,sig_row$gene_id], 
-                 Genotype = as.factor(snps_filtered_t[,sig_row$snp_id]))
-
-df %>% 
-  ggplot(aes(x=Genotype, y=Expression)) + geom_boxplot()
-
-dim(gene_expr[sig_row$gene_id,])
-dim(snps_filtered[sig_row$snp_id,])
-as.vector(gene_expr[sig_row$gene_id,])
-
-
-lm_matrix_cov %>%
-  filter(p.adj < 0.05)
-
-lm_matrix %>%
-  filter(p.adj < 0.05)
+head(cis_eqtls)
+hist(cis_eqtls$pve)
+cis_eqtls %>%
+  arrange(desc(pve)) %>%
+  head(1) %>%
+  select(gene)

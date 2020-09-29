@@ -1,5 +1,5 @@
 ---
-title: "qQTL exercise"
+title: "Assignment 2.2 Part 1"
 author: "Mahdi"
 date: "September 25, 2020"
 output: pdf_document

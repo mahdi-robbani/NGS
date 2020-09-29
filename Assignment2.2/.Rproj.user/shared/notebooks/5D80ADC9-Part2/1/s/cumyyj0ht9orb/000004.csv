@@ -1,0 +1,78 @@
+"0","me = Matrix_eQTL_main(
+  snps = snps,
+  gene = gene,
+  output_file_name=NULL,
+  pvOutputThreshold = pvOutputThreshold_tra,
+  useModel = modelLINEAR,
+  errorCovariance =numeric(),
+  verbose = TRUE,
+  output_file_name.cis = NULL, #Do not write out cis results
+  pvOutputThreshold.cis = pvOutputThreshold_cis,
+  snpspos = snpspos,
+  genepos = genepos,
+  cisDist = cisDist,
+  min.pv.by.genesnp = FALSE,
+  noFDRsaveMemory = FALSE,
+  pvalue.hist = FALSE)
+"
+"2","Matching data files and location files
+"
+"2","561 of 561 genes matched
+"
+"2","30000 of 30000 SNPs matched
+
+"
+"2","Task finished in 0.02 seconds
+"
+"2","Reordering genes
+"
+"2","Task finished in 0.17 seconds
+"
+"2","Processing covariates
+"
+"2","Task finished in 0 seconds
+"
+"2","Processing gene expression data (imputation, residualization)
+"
+"2","Task finished in 0.01 seconds
+"
+"2","Creating output file(s)
+"
+"2","Task finished in 0.02 seconds
+"
+"2","Performing eQTL analysis
+"
+"2"," 6.66% done, 56,158 cis-eQTLs
+"
+"2","13.33% done, 101,338 cis-eQTLs
+"
+"2","20.00% done, 113,643 cis-eQTLs
+"
+"2","26.66% done, 127,676 cis-eQTLs
+"
+"2","33.33% done, 136,430 cis-eQTLs
+"
+"2","40.00% done, 166,641 cis-eQTLs
+"
+"2","46.66% done, 187,389 cis-eQTLs
+"
+"2","53.33% done, 245,058 cis-eQTLs
+"
+"2","60.00% done, 286,249 cis-eQTLs
+"
+"2","66.66% done, 331,024 cis-eQTLs
+"
+"2","73.33% done, 377,660 cis-eQTLs
+"
+"2","80.00% done, 409,288 cis-eQTLs
+"
+"2","86.66% done, 425,208 cis-eQTLs
+"
+"2","93.33% done, 456,812 cis-eQTLs
+"
+"2","100.00% done, 527,117 cis-eQTLs
+"
+"2","Task finished in 1.41 seconds
+"
+"2","
+"

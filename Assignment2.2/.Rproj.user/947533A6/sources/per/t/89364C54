@@ -8,15 +8,15 @@
     "hash" : "3733384069",
     "id" : "89364C54",
     "lastKnownWriteTime" : 1601214692,
-    "last_content_update" : 1601214692785,
+    "last_content_update" : 1601384335965,
     "path" : "C:/Users/mahdi/OneDrive - Københavns Universitet/Advanced Bioinfo/adv_bioinfio/Exercises/eQTL/eQTL.Rmd",
     "project_path" : null,
     "properties" : {
         "cursorPosition" : "106,2",
-        "last_setup_crc32" : "471FB6DEbb338d19",
+        "last_setup_crc32" : "",
         "scrollLine" : "0"
     },
-    "relative_order" : 5,
+    "relative_order" : 6,
     "source_on_save" : false,
     "source_window" : "",
     "type" : "r_markdown"
