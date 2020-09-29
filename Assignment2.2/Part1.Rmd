@@ -23,7 +23,12 @@ Gene expression levels can be somehwat explained by the first SNP but not the se
 ## Question 4 Do a linear regression for snp_22_43336231 on ENSG00000100266.11
 
 ```{r, echo=F}
-snps <- read.table("sub_geno.tab")
+#load files
+snps <- read.table("data/sub_geno.tab")
+gene_expr <- read.table("data/sub_expr.tab")
+design <- read.table("data/design.tab", header = T, sep = "\t")
+
+
 missing_count <- apply((snps == -1), 1, sum)
 get_geno_frequency <- function(geno, snp_mat){
   boolean_matrix <- snp_mat == geno
@@ -46,7 +51,6 @@ get_maf <- function(snp_mat){
 maf <- get_maf(snps)
 keep <- maf >= 0.05 & missing_count == 0
 snps_filtered <- snps[keep,]
-design <- read.table("design.tab", header = T, sep = "\t")
 
 filter_snp_population <- function(pop, snp_mat, design_mat, inv=F){
   if(inv){
@@ -63,7 +67,6 @@ non_african_snps <- filter_snp_population("YRI", snps_filtered, design, inv = T)
 
 african_maf <- get_maf(african_snps)
 non_african_maf <- get_maf(non_african_snps)
-gene_expr <- read.table("sub_expr.tab")
 ```
 
 
@@ -80,7 +83,7 @@ summary(lm_no_cov)
 
 ### Using the genotype PCs from pc_cvrt.tab as covariates
 ```{r}
-pc <- read.table("pc_cvrt.tab")
+pc <- read.table("data/pc_cvrt.tab")
 lm_pc <- lm(gene2_col ~ gene2_snp + pc$PC1 + pc$PC2 + pc$PC3 + pc$PC4 + pc$PC5)
 summary(lm_pc)
 ```
@@ -190,9 +193,9 @@ snps <- SlicedData$new()
 snps$CreateFromMatrix(as.matrix(snps_filtered)) #filt_geno is your filtered genotype matrix
 genes <- SlicedData$new()
 genes$CreateFromMatrix(as.matrix(gene_expr)) #expr is the unchanged expression matrix
-snp_pos <- read.table("sample_geno.pos",sep="\t",header=T)
+snp_pos <- read.table("data/sample_geno.pos",sep="\t",header=T)
 snp_pos <- snp_pos[snp_pos$snp %in% row.names(snps_filtered),]
-gene_pos <- read.table("sample_expr.pos",sep="\t",header=T)
+gene_pos <- read.table("data/sample_expr.pos",sep="\t",header=T)
 all(colnames(snps) == colnames(genes))
 eQTL <- Matrix_eQTL_main(snps, genes, output_file_name=NULL,
 output_file_name.cis=NULL,
