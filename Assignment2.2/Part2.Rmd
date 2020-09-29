@@ -74,5 +74,163 @@ Gene ENSG00000227063.4 shows the highest mean expression.
 
 ## Task 2
 
+```{r}
+#Matrix eQTL
+library(MatrixEQTL)
 
+# Genotype file names
+SNP_file_name = "data/geno_ceu_chr20_strict.tab" ; #Genotype file path
+snps_location_file_name = "data/geno_ceu_chr20_strict.pos" ; #snp position file path
 
+# Gene expression file names
+expression_file_name = "data/expr_ceu_chr20.tab" ;#Expression file path
+gene_location_file_name = "data/expr_chr20.pos" ;#gene position file path
+
+# Only associations significant at this level will be saved
+pvOutputThreshold_cis = 1; #p.value threshold for cis eqtls
+pvOutputThreshold_tra = 0; #p.value threshold for trans eqtls
+
+#Covariates file names
+covariates_file_name = character();# Set to character() for no covariates
+
+# Distance for local gene-SNP pairs
+cisDist = 1e6; #Define cis distance
+
+## Load genotype data
+snps = SlicedData$new();
+snps$fileDelimiter = "\t"; # the TAB character
+snps$fileOmitCharacters = "NA"; # denote missing values;
+snps$fileSkipRows = 1; # one row of column labels
+snps$fileSkipColumns = 1; # one column of row labels
+snps$fileSliceSize = 2000; # read file in slices of 2,000 rows
+snps$LoadFile(SNP_file_name);
+
+## Load gene expression data
+gene = SlicedData$new();
+gene$fileDelimiter = "\t"; # the TAB character
+gene$fileOmitCharacters = "NA"; # denote missing values;
+gene$fileSkipRows = 1; # one row of column labels
+gene$fileSkipColumns = 1; # one column of row labels
+gene$fileSliceSize = 2000; # read file in slices of 2,000 rows
+gene$LoadFile(expression_file_name);
+
+#Load position files
+snpspos = read.table(snps_location_file_name, header = TRUE, stringsAsFactors = FALSE);
+genepos = read.table(gene_location_file_name, header = TRUE, stringsAsFactors = FALSE);
+
+## Run the analysis
+me = Matrix_eQTL_main(
+  snps = snps,
+  gene = gene,
+  output_file_name=NULL,
+  pvOutputThreshold = pvOutputThreshold_tra,
+  useModel = modelLINEAR,
+  errorCovariance =numeric(),
+  verbose = TRUE,
+  output_file_name.cis = NULL, #Do not write out cis results
+  pvOutputThreshold.cis = pvOutputThreshold_cis,
+  snpspos = snpspos,
+  genepos = genepos,
+  cisDist = cisDist,
+  min.pv.by.genesnp = FALSE,
+  noFDRsaveMemory = FALSE,
+  pvalue.hist = FALSE)
+cis_eqtls = me$cis$eqtls[,-c(5)]
+cis_eqtls["beta_se"] = cis_eqtls["beta"]/cis_eqtls["statistic"]
+rm(me)
+```
+
+1. How many tests were conducted?
+527,117 tests were conducted.
+
+2. Using a bonferroni correction ($\alpha$ = 0.05), how many genes are significant?
+```{r}
+cis_eqtls$p.adj <- p.adjust(cis_eqtls$pvalue, method = "bonferroni")
+sum(cis_eqtls$p.adj <= 0.05)
+```
+71 genes are significant
+
+3. What gene-snp pair show the lowest pvalue? What is the effect size of this snp-gene pair?
+```{r}
+cis_eqtls[cis_eqtls$p.adj== min(cis_eqtls$p.adj),]
+```
+The snp_20_37055875, ENSG00000196756.5 pair has the lowest p value. The effect size is 8.146604.
+
+4. What is the biotype of this gene?
+???????
+
+## Task 3
+```{r}
+# Genotype file names
+SNP_file_name = "data/geno_ceu_chr22_strict.tab" ; #Genotype file path
+snps_location_file_name = "data/geno_ceu_chr22_strict.pos" ; #snp position file path
+
+# Gene expression file names
+expression_file_name = "data/expr_ceu_chr20.tab" ;#Expression file path
+gene_location_file_name = "data/expr_chr20.pos" ;#gene position file path
+
+# Only associations significant at this level will be saved
+pvOutputThreshold_cis = 0; #p.value threshold for cis eqtls
+pvOutputThreshold_tra = 1; #p.value threshold for trans eqtls
+
+#Covariates file names
+covariates_file_name = character();# Set to character() for no covariates
+
+# Distance for local gene-SNP pairs
+cisDist = 1e6; #Define cis distance
+
+## Load genotype data
+snps = SlicedData$new();
+snps$fileDelimiter = "\t"; # the TAB character
+snps$fileOmitCharacters = "NA"; # denote missing values;
+snps$fileSkipRows = 1; # one row of column labels
+snps$fileSkipColumns = 1; # one column of row labels
+snps$fileSliceSize = 2000; # read file in slices of 2,000 rows
+snps$LoadFile(SNP_file_name);
+
+## Load gene expression data
+gene = SlicedData$new();
+gene$fileDelimiter = "\t"; # the TAB character
+gene$fileOmitCharacters = "NA"; # denote missing values;
+gene$fileSkipRows = 1; # one row of column labels
+gene$fileSkipColumns = 1; # one column of row labels
+gene$fileSliceSize = 2000; # read file in slices of 2,000 rows
+gene$LoadFile(expression_file_name);
+
+#Load position files
+snpspos = read.table(snps_location_file_name, header = TRUE, stringsAsFactors = FALSE);
+genepos = read.table(gene_location_file_name, header = TRUE, stringsAsFactors = FALSE);
+
+## Run the analysis
+me = Matrix_eQTL_main(
+  snps = snps,
+  gene = gene,
+  output_file_name=NULL,
+  pvOutputThreshold = pvOutputThreshold_tra,
+  useModel = modelLINEAR,
+  errorCovariance =numeric(),
+  verbose = TRUE,
+  output_file_name.cis = NULL, #Do not write out cis results
+  pvOutputThreshold.cis = pvOutputThreshold_cis,
+  snpspos = snpspos,
+  genepos = genepos,
+  cisDist = cisDist,
+  min.pv.by.genesnp = FALSE,
+  noFDRsaveMemory = FALSE,
+  pvalue.hist = FALSE)
+trans_eqtls = me$all$eqtls[,-c(5)]
+trans_eqtls["beta_se"] = trans_eqtls["beta"]/trans_eqtls["statistic"]
+rm(me)
+```
+
+1. How many tests were conducted?
+527,117 tests were conducted.
+
+2. Using a bonferroni correction ($\alpha$ = 0.05), how many genes are significant?
+```{r}
+trans_eqtls$p.adj <- p.adjust(trans_eqtls$pvalue, method = "bonferroni")
+sum(trans_eqtls$p.adj <= 0.05)
+```
+None of the genes are significant
+
+## Task 4
