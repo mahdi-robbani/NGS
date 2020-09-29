@@ -234,3 +234,35 @@ sum(trans_eqtls$p.adj <= 0.05)
 None of the genes are significant
 
 ## Task 4
+1. Briefly explain what a QQ-plot can be used for (2-3 sentences)
+A QQ-plot can be used to check if a distribution is Normally distributed. For example, if we have some data and we assume it is normally ditributed, we can make a QQ-plot of the data and get a rough idea if our assumption is correct.
+
+2. Compute the QQ-plot for both the cis and trans eqtl separately
+```{r}
+qqp<-function(x, maxLogP=30,...){
+  x<-x[!is.na(x)]
+  if(!missing(maxLogP)){
+    x[x<10^-maxLogP]<-10^-maxLogP
+  }
+  N<-length(x)
+  chi1<-qchisq(1-x,1)
+  x<-sort(x)
+  e<- -log((1:N-0.5)/N,10)
+  plot(e,-log(x,10),ylab="Observed log10(p-value)",xlab="Expected log10(p-value)",...)
+  abline(0,1,col=2,lwd=2)
+  c95<-qbeta(0.95,1:N,N-(1:N)+1)
+  c05<-qbeta(0.05,1:N,N-(1:N)+1)
+  lines(e,-log(c95,10))
+  lines(e,-log(c05,10))
+}
+
+qqp(cis_eqtls$pvalue)
+qqp(trans_eqtls$pvalue)
+```
+
+3. Explain the plots
+The red line represents where the points would be if the expected and observed distributions were exactly the same, therfore when the black points fall on the red line, it means the two distributions are normally distributed. From the graphs we can see that the cis eQTLs are not normally distributed while the trans eQTLs are.
+4. What is the main difference between these two QQ-plots?
+The main difference is that for the cis eQTLs the observed p values are much lower than the expected p values. This means we find significant sites more often than expected.
+5. Explain what drives this?
+Cis eQTLs are SNPs that affect the gene expression of nearby genes. This means one cis eQTL could affect multiple genes in the regiion so these eQTLs are more likely to affect gene expression than random. In contrast, trans eQTLs affect distant genes so knowing the posititon of a trans eQTL doesn't say anything about which genes could be affected, so the p values are indepdendent and nromally distributed. 
