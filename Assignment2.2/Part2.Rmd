@@ -1,0 +1,78 @@
+---
+title: "Assignment 2.2 Part 2"
+author: "Mahdi"
+date: "September 29, 2020"
+output: pdf_document
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Part 2
+
+##Task 1
+1. How many samples are included in this dataset?
+```{r}
+expr_ceu_20 <- read.table("data/expr_ceu_chr20.tab", header = T) #gene expr vs samps
+gene_pos <- read.table("data/expr_chr20.pos", header = T)
+snp_ceu_20 <- read.table("data/geno_ceu_chr20_strict.tab", header=T) #snp vs samps
+snp_pos <- read.table("data/geno_ceu_chr20_strict.pos", header = T)
+
+dim(expr_ceu_20)[2] -1
+```
+There are 91 samples in the dataset.
+
+2.How many variants are present on chromosome 20?
+```{r}
+dim(snp_pos)[1]
+```
+There are 30000 SNPS on chromosome 20.
+
+3. Generate a histogram of allele frequencies for chromosome 20.
+```{r}
+get_geno_frequency <- function(geno, snp_mat){
+  boolean_matrix <- snp_mat == geno
+  count <- apply(boolean_matrix, 1, sum)
+  freq <- count/dim(snp_mat)[2]
+  return (freq)
+}
+
+get_af <- function(snp_mat){
+  genotypes <- c(0,1,2)
+  #get matrix of genotype frequencies
+  geno_freq <- sapply(genotypes, get_geno_frequency, snp_mat)
+  colnames(geno_freq) <- genotypes
+  allele_freq <- geno_freq + geno_freq[,2]/2
+  allele_freq <- allele_freq[,-2]
+  #maf <- apply(allele_freq, 1, min)
+  return (allele_freq)
+}
+
+allele_freq <- get_af(snp_ceu_20)
+hist(allele_freq[,1])
+#hist(allele_freq[,2])
+```
+
+4. What is the lowest allele frequency observed?
+```{r}
+min(allele_freq[,1])
+```
+The lowest allele frequency is 0.1521739.
+
+5. How many genes are included?
+```{r}
+dim(expr_ceu_20)[1]
+```
+There are 561 genes in the dataset.
+
+6. What gene shows the highest mean expression?
+```{r}
+mean_expr <- apply(expr_ceu_20[,-1], 1 , mean)
+expr_ceu_20[mean_expr == max(mean_expr),1]
+```
+Gene ENSG00000227063.4 shows the highest mean expression.
+
+## Task 2
+
+
+
