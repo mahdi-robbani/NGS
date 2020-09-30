@@ -1,0 +1,17 @@
+---
+title: "Assignment 2.1"
+author: "Mahdi"
+date: "September 30, 2020"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# 1.2
+## 1.2.1
+The 1st column is African, the 2nd columns is European and the 3rd column is Asian.
+
+## 1.2.2
+
