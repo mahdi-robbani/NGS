@@ -1,0 +1,6 @@
+"0","plotAccuracy<-function(x,p,...){"
+"0","  p<-p[!is.na(x)]"
+"0","  x<-x[!is.na(x)]"
+"0","  ord<-order(p,decreasing=T)"
+"0","  lines(1:length(x)/length(x),cumsum(!x[ord])/1:length(x),...)"
+"0","}"

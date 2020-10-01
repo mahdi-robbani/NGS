@@ -28,7 +28,7 @@ get_posterior <- function(likelihood, prior){
 }
 
 posterior_1 <- get_posterior(lik_61, 1/3)
-called_geno_1 <- apply(posterior, 1, max)
+called_geno_1 <- apply(posterior_1, 1, max)
 hist(called_geno_1)
 
 #2
@@ -72,13 +72,15 @@ get_predictions <- function(post, max, true){
 true <- genotypes$NA12750
 pred_1 <- get_predictions(posterior_1, called_geno_1, true)
 pred_2 <- get_predictions(posterior_2, called_geno_2, true)
-pred_3 <- get_predictions(posterior_1, called_geno_3, true)
+pred_3 <- get_predictions(posterior_3, called_geno_3, true)
 
 
 plot(1,xlim=0:1,ylim=c(0,0.40),col="transparent",xlab="callrate",ylab="error rate")
-plotAccuracy(pred_1,called_geno_1,lwd=3,col="hotpink")
-plotAccuracy(pred_2,called_geno_2,lwd=3,col="red")
-plotAccuracy(pred_3,called_geno_3,lwd=3,col="blue")
+plotAccuracy(pred_1,called_geno_1,lwd=3,col=1)
+plotAccuracy(pred_2,called_geno_2,lwd=3,col=2)
+plotAccuracy(pred_3,called_geno_3,lwd=3,col=3)
+legend(0.70, 0.4, legend = c("Uniform", "Frequency", "Beagle"), 
+       col= c(1,2,3), lty=1)
 
 
 ###########################
@@ -101,9 +103,10 @@ list_3_pops <- lapply(freq, get_pred_maxpost, lik_3, true2)
 
 #get predictions and posteriors for combined pop
 admix <- read.table("assign3.qopt")
-prior_combined <- (admix$V1 * get_genotype_freq(freq$V1)) +
-  (admix$V2 * get_genotype_freq(freq$V2)) +
-  (admix$V3 * get_genotype_freq(freq$V3))
+admix_3 <- admix[3,]
+prior_combined <- (admix_3$V1 * get_genotype_freq(freq$V1)) +
+  (admix_3$V2 * get_genotype_freq(freq$V2)) +
+  (admix_3$V3 * get_genotype_freq(freq$V3))
 
 posterior_combined <- get_posterior(lik_3, prior_combined)
 called_geno_comb <- apply(posterior_combined, 1, max)

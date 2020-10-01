@@ -1,8 +1,0 @@
-## posterior probabilities
-PP <- c(0.9,0.1,0.45,0.99,0.15,0.9999,0.75,0.60,0.88,0.98)
-## indicator of correct prediction
-CP <- c(T,F,T,T,T,T,F,F,T,T) #you can also use 1s and zeroes
-
-x <- (posterior_3 == called_geno_3) * c(1,2,3)
-head(x)
-(apply(x, 1, sum)) - 1

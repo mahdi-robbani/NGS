@@ -1,0 +1,7 @@
+"0","#get posterior"
+"0","get_posterior <- function(likelihood, prior){"
+"0","  numerator <- likelihood * prior"
+"0","  denominator <- apply(numerator, 1, sum)"
+"0","  posterior <- numerator/denominator"
+"0","  return(posterior)"
+"0","}"
