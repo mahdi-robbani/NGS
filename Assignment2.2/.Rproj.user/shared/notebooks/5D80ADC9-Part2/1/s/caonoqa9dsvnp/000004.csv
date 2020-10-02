@@ -1,16 +1,21 @@
 "0","# Genotype file names"
 "0","SNP_file_name = ""data/geno_ceu_chr22_strict.tab"" ; #Genotype file path"
 "0","snps_location_file_name = ""data/geno_ceu_chr22_strict.pos"" ; #snp position file path"
+"0",""
 "0","# Gene expression file names"
 "0","expression_file_name = ""data/expr_ceu_chr20.tab"" ;#Expression file path"
 "0","gene_location_file_name = ""data/expr_chr20.pos"" ;#gene position file path"
+"0",""
 "0","# Only associations significant at this level will be saved"
 "0","pvOutputThreshold_cis = 0; #p.value threshold for cis eqtls"
 "0","pvOutputThreshold_tra = 1; #p.value threshold for trans eqtls"
+"0",""
 "0","#Covariates file names"
 "0","covariates_file_name = character();# Set to character() for no covariates"
+"0",""
 "0","# Distance for local gene-SNP pairs"
 "0","cisDist = 1e6; #Define cis distance"
+"0",""
 "0","## Load genotype data"
 "0","snps = SlicedData$new();"
 "0","snps$fileDelimiter = ""\t""; # the TAB character"
@@ -34,6 +39,7 @@
 "0","#Load position files"
 "0","snpspos = read.table(snps_location_file_name, header = TRUE, stringsAsFactors = FALSE);"
 "0","genepos = read.table(gene_location_file_name, header = TRUE, stringsAsFactors = FALSE);"
+"0",""
 "0","## Run the analysis"
 "0","me = Matrix_eQTL_main("
 "0","  snps = snps,"
@@ -57,17 +63,17 @@
 "
 "2","Processing gene expression data (imputation, residualization)
 "
-"2","Task finished in 0 seconds
+"2","Task finished in 0.03 seconds
 "
 "2","Creating output file(s)
 "
-"2","Task finished in 0.01 seconds
+"2","Task finished in 0.05 seconds
 "
 "2","Performing eQTL analysis
 "
 "2","100.00% done, 561,561 eQTLs
 "
-"2","Task finished in 0.42 seconds
+"2","Task finished in 0.97 seconds
 "
 "2","
 "
