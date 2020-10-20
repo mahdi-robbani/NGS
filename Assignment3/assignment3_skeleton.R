@@ -1,11 +1,10 @@
 # AS Oct 2020
 # Advanced Topics in Bioinformatics
 # homework assignment
-library(plyr)
-library(ggplot2)
-library(reshape2)
+library(tidyverse)
+library(Biostrings)
 
-base_dir <- "/your/folder/here"
+base_dir <- "data"
 
 # ordering of amino acid by biochemical properties. You don't need to use this. It makes it easier to spot clusters of similar effects that are due to biochemistry.
 colnames.by.AA <- c("G", "A", "V", "L", "I", "M", "F", "W", "P", "S", "T", "C", "Y", "N", "Q", "D", "E", "K", "R", "H")
@@ -22,19 +21,65 @@ nativeDNA <- "AGCAAGGGCGAGGAGCTGTTCACCGGGGTGGTGCCCATCCTGGTCGAGCTGGACGGCGACGTAAAC
 
 # quality control step 1: remove sequences that are too long, too short, or have gaps
 # useful function: nchar()
+head(Sarkisyan.data)
+
+
+filter_df <- function(df, n){
+  df <- df[df$uniqueBarcodes > 4,]
+  df <- df[!grepl("[^ATCG]", df$sequence),] #remove anything without the 4 bases
+  df <- df[str_length(df$sequence) == n,]
+  return(df)
+}
+
+N <- str_length(nativeDNA)
+filtered_data <- filter_df(Sarkisyan.data, N)
 
 # translate to protein
+conv_and_translate <- function(string){
+  string <- DNAString(string)
+  string <- translate(string)
+  string <- toString(string)
+  return(string)
+}
+
+filtered_data$AAsequence <- as.character(lapply(filtered_data$sequence, conv_and_translate))
 
 # quality control step 2: remove sequences with premature STOP codons
+filtered_data <- filtered_data[!grepl(".*[*].", filtered_data$AAsequence),]
 
 # Here, unlike in the GFP dataset we discussed in class, the uniqueBarcodes column tells us how often a particular sequence has been observed, while the medianBrightness tells us how bright fluorescence in those cells was (with stdErr estimating the measurement error, if available).
 # How many unique barcodes (=DNA variant sequences) are found? How many unique protein sequences after cleanup? What is the most common protein sequence that is not wild-type? Include your answers in your hand-in.
-
+sum(filtered_data$uniqueBarcodes)
+length(unique(filtered_data$AAsequence))
+count_df <- data.frame(table(filtered_data$AAsequence))
+count_df %>%
+  arrange(desc(Freq)) %>%
+  filter(Freq == 2) %>%
+  select(Var1)
 
 # Task 2: protein-level variants
 # ------------------------------
 # Next, determine differences to the native protein sequence. For simplicity we will consider each position independently, i.e., regardless of whether this mutation was only observed in context of other mutations. So, if a protein with A23P and S84Q is reported to have a medianBrightness of 3.5, then the brightness of A23P is 3.5 and the brightness of S84Q is 3.5 (in that protein). We also want to average the brightness across all contexts, so if i.e. there were 3 unique(!) proteins containing the A23P mutation, the averaged brightness of A23P is mean(brightness(protein1),brightness(protein2),brightness(protein3)).
 #It may be convenient to generate a dataframe spanning all 20 possible amino acids at all positions, like we did in Exercise 2.
+get_aa_diff <- function(mutated, native){
+  mutated <- str_split(mutated, "")[[1]]
+  diff_vector <- native != mutated
+  if(sum(diff_vector) > 0){
+    native_base <- native[diff_vector]
+    mutated_base <- mutated[diff_vector]
+    pos <- (1:length(native))[diff_vector]
+    return(data.frame("Ref" = native_base, 
+                      "Alt" = mutated_base, 
+                      "Pos" = pos))
+  }
+}
+
+nativeAA <- translate(DNAString(nativeDNA))
+nativeAA <- str_split(nativeAA, "")[[1]]
+AA_diff_df <- do.call("rbind", lapply(filtered_data$AAsequence, 
+                                      get_aa_diff, nativeAA))
+
+head(AA_diff_df)
 
 # - see discussion in class on Oct 6 for useful functions to determine differences between wild-type and variant sequence
 

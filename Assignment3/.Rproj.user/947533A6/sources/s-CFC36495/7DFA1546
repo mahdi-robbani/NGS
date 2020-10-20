@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1603141663610.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2565113108",
+    "id" : "7DFA1546",
+    "lastKnownWriteTime" : 1603178715,
+    "last_content_update" : 1603178715143,
+    "path" : "C:/Users/mahdi/OneDrive - Københavns Universitet/Advanced Bioinfo/adv_bioinfio/Assignment3/assignment3_skeleton.R",
+    "project_path" : "assignment3_skeleton.R",
+    "properties" : {
+        "cursorPosition" : "83,0",
+        "scrollLine" : "67"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
