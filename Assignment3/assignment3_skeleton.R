@@ -24,7 +24,7 @@ nativeDNA <- "AGCAAGGGCGAGGAGCTGTTCACCGGGGTGGTGCCCATCCTGGTCGAGCTGGACGGCGACGTAAAC
 #head(Sarkisyan.data)
 
 
-filter_df <- function(df, n){
+filter_sark <- function(df, n){
   df <- df[df$uniqueBarcodes > 1,]
   df <- df[!grepl("[^ATCG]", df$sequence),] #remove anything without the 4 bases
   df <- df[str_length(df$sequence) == n,]
@@ -32,7 +32,7 @@ filter_df <- function(df, n){
 }
 
 N <- str_length(nativeDNA)
-filtered_data <- filter_df(Sarkisyan.data, N)
+filtered_data <- filter_sark(Sarkisyan.data, N)
 
 # translate to protein
 conv_and_translate <- function(string){
@@ -103,6 +103,7 @@ data_AA %>%
   summarize(AvgBrightness = mean(medianBrightness), 
             AvgStdErr = mean(stdErr), number=n()) -> AA_avg_brightness
   
+
 # - see discussion in class on Oct 6 for useful functions to determine differences between wild-type and variant sequence
 
 # As a control for the averaged data across different sequences, create a subset of the dataset where only single-mutation sequences are considered. 
@@ -114,13 +115,19 @@ data_AA %>%
   mutate(Mutation =paste0(Ref, Pos, Alt)) %>%
   filter(NumMuts == 1) %>%
   group_by(Mutation) %>%
-  summarize(SingleBrightness = mean(medianBrightness), StdErr = mean(stdErr)) -> AA_brightness_control
+  summarize(SingleBrightness = mean(medianBrightness), 
+            StdErr = mean(stdErr)) -> AA_brightness_control
+
+AA_brightness_control
 
 # Then compare the medianBrightness of those single-mutant sequences to the averaged data you created above. In our example above that would mean comparing the brightness of the A23P single mutant protein to the average brightness over all proteins that contain an A23P mutation. You should get scatter plots analogous to those we discussed in class on Oct 9th, see also  https://www.biorxiv.org/content/biorxiv/early/2020/05/26/2020.05.26.116756/F7.large.jpg?width=800&height=600&carousel=1. Include the stdErr in the plot, using geom_errorbar() and geom_errorbarh(). Are the deviations you observe beyond what you expect based on the experimental error? Submit plot and discussion as part of your hand-in.
-inner_join(AA_avg_brightness, AA_brightness_control, by="Mutation") %>%
-  ggplot(aes(x=SingleBrightness, y=AvgBrightness, col=number )) + geom_point() +
-    geom_errorbar(aes(ymin=AvgBrightness-AvgStdErr, ymax=AvgBrightness+AvgStdErr)) +
-    geom_errorbarh(aes(xmin=SingleBrightness-StdErr, xmax=SingleBrightness+StdErr))
+AA_brightness_combined <- inner_join(AA_avg_brightness, 
+                                     AA_brightness_control, by="Mutation")
+AA_brightness_combined %>%
+  filter(number >1)
+  ggplot(aes(x=SingleBrightness, y=AvgBrightness)) + geom_point(col="blue") +
+    geom_errorbar(aes(ymin=AvgBrightness-AvgStdErr, ymax=AvgBrightness+AvgStdErr), alpha=0.5) +
+    geom_errorbarh(aes(xmin=SingleBrightness-StdErr, xmax=SingleBrightness+StdErr), alpha=0.5)
   
 
 # Next, pick 2 amino acids from your first and last name, respectively -> AA1, AA1
@@ -130,35 +137,68 @@ inner_join(AA_avg_brightness, AA_brightness_control, by="Mutation") %>%
 # This is analogous to Exercise 3.
 # Submit the plots for all 4 distributions as part of your handin. Of course you can plot all 4 distributions in the same figure, so long it is clear which line corresponds to which dataset.
 
-data_AA %>%
-  filter(Ref == "S") %>%
-  ggplot(aes(x=medianBrightness)) + geom_histogram()
-data_AA %>%
-  filter(Ref == "R") %>%
-  ggplot(aes(x=medianBrightness)) + geom_histogram()
-data_AA %>%
-  filter(Alt == "S") %>%
-  ggplot(aes(x=medianBrightness)) + geom_histogram()
-data_AA %>%
-  filter(Alt == "R") %>%
-  ggplot(aes(x=medianBrightness)) + geom_histogram()
+compare_letters <- function(A, B, data){
+  data %>%
+    filter(Ref == A) %>%
+    select(medianBrightness) %>%
+    mutate(Group = "To All", AA = A) -> dist1
+  
+  data %>%
+    filter(Ref == B) %>%
+    select(medianBrightness) %>%
+    mutate(Group = "To All", AA = B) -> dist2
+  
+  data %>%
+    filter(Alt == A) %>%
+    select(medianBrightness) %>%
+    mutate(Group = "To Res", AA = A) -> dist3
+  
+  data %>%
+    filter(Alt == B) %>%
+    select(medianBrightness) %>%
+    mutate(Group = "To Res", AA = B) -> dist4
+  
+  dist <- rbind(dist1,dist2,dist3,dist4)
+  return(dist)
+}
 
+data_AA %>%
+  filter(Ref == "X") %>%
+  select(medianBrightness) %>%
+  max -> maxBright
+
+data_AA %>%
+  filter(Ref == "X") %>%
+  select(medianBrightness) %>%
+  min -> minBright
+
+
+compare_letters("S", "R", data_AA) %>%
+  ggplot(aes(x=medianBrightness, fill=Group)) + 
+  geom_density(alpha=0.5) +
+  facet_wrap(~AA) +
+  geom_vline(xintercept=minBright, col="red") +
+  geom_vline(xintercept=maxBright, col="red")
 
 # Task 3: summary matrix
 # ----------------------
 # summarise the results across all variants in a 20x20 matrix showing the wild-type and target amino acids, as we did in the exercises in class. Submit a plot of the matrix (see e.g. ex. 3) as part of your homework assignment. You can use the colnames.by.AA to sort the amino acids:
 data_AA %>%
-  select(Ref, Alt) %>%
-  add_row(Ref = colnames.by.AA, Alt = "X") %>%
-  add_row(Alt = colnames.by.AA, Ref = "X") %>%
-  table %>%
-  as.data.frame %>%
-  filter(Ref != "X" & Alt != "X") %>%
-  ggplot(aes(x=Ref, y=Alt, fill= Freq)) + geom_tile() +
-  scale_fill_gradient(low = "white", high = "blue")
+  select(Ref, Alt, medianBrightness) %>%
+  add_row(Ref = colnames.by.AA, Alt = "X", medianBrightness = 0) %>%
+  add_row(Alt = colnames.by.AA, Ref = "X", medianBrightness = 0) %>%
+  group_by(Ref, Alt) %>%
+  summarize(Brightness = mean(medianBrightness)) %>%
+  filter(Ref != "X" & Alt != "X") -> mut_data
 
-#mut.data$wt.ord <- factor( mut.data$aa.wt, levels = colnames.by.AA) 
-#mut.data$mut.ord <- factor( mut.data$aa.mut, levels = colnames.by.AA) 
+mut_data$Ref <- factor(mut_data$Ref, levels = colnames.by.AA) 
+mut_data$Alt <- factor(mut_data$Alt, levels = colnames.by.AA)
+mut_data %>%
+  ggplot(aes(x=Ref, y=Alt, fill= Brightness)) + geom_tile() +
+  scale_fill_gradientn(colours = c("white", "yellow", "red"), 
+                       values = c(0,0.5,1))
+
+ 
 # useful function: ddply(mut.data, ..., summarise, ...)
 # https://colorbrewer2.org/ for colour schemes
 
@@ -171,6 +211,15 @@ data_AA %>%
 # load in the native DNA from exercise 1
 # compare it to the nativeDNA included above (e.g. by pairwise sequence alignment), then translate both sequences to protein and compare those. 
 # Write a short paragraph describing what you observe.
+library(Biostrings)
+nativeDNA_1 <- readDNAStringSet("data/native_DNA.fa")
+pairwiseAlignment(nativeDNA, nativeDNA_1)
+
+nativeAA <- translate(DNAString(nativeDNA))
+nativeAA_1 <- translate(nativeDNA_1$seq)
+AA_alignment <- pairwiseAlignment(nativeAA, nativeAA_1)
+AA_alignment
+
 
 # Task 4.2
 # Load in the GFP dataset we parsed in exercise 2, including the cleanup steps, translation to protein and identification of differences to the wt sequence. 
@@ -178,8 +227,68 @@ data_AA %>%
 #  - observed in both datasets? 
 #  - only observed in the Sarkisyan dataset?
 #  - only observed in the dataset we worked with in class?
+filter_gfp <- function(df, n){
+  df <- df[df$V1 > 4,]
+  df <- df[!grepl("[^ATCG]", df$V2),] #remove anything without the 4 bases
+  df <- df[str_length(df$V2) == n,]
+  return(df)
+}
+
+translate_gfp <- function(df){
+  df$V3 <- as.character(lapply(df$V2, conv_and_translate))
+  df <- df[!grepl(".*[*].", df$V3),]
+  colnames(df) <- c("Count", "DNA", "AAsequence")
+  return(df)
+}
+
+get_diff_df_gfp <- function(seq_df, nativeDNA){
+  #calculate length of DNA and create AA list
+  N <- str_length(nativeDNA$seq)
+  nativeAA <- translate(nativeDNA$seq)
+  nativeAA <- str_split(nativeAA, "")[[1]]
+  #filter, trnslate and add seqID
+  seq_df <- filter_gfp(seq_df, N)
+  seq_df <- translate_gfp(seq_df)
+  seq_df <- rownames_to_column(seq_df, "SeqID")
+  #calculate differences between native and seq
+  diff_df <-  bind_rows(lapply(seq_df$SeqID, get_aa_diff, 
+                               seq_df, nativeAA))
+  diff_df$Pos <- diff_df$Pos + 132 #alignment
+  diff_df$Mutation <- paste0(diff_df$Ref, diff_df$Pos, diff_df$Alt)
+  # merge the dataframes
+  seq_df <- merge(x = diff_df, y = seq_df, by = "SeqID", all.x = TRUE)
+  return(seq_df)
+}
+
+dim_df <- read.table("data/dim_GFP_beads.counts", stringsAsFactors = F)
+dim_df <- get_diff_df_gfp(dim_df, nativeDNA_1)
+
+dim_df %>%
+  filter(Mutation != "X0X") %>%
+  group_by(Mutation) %>%
+  summarize(FreqDim = n()) -> dim_freq
+
+
+bright_df <- read.table("data/bright_GFP_beads.counts", stringsAsFactors = F)
+bright_df <- get_diff_df_gfp(bright_df, nativeDNA_1)
+
+
+bright_df %>%
+  filter(Mutation != "X0X") %>%
+  group_by(Mutation) %>%
+  summarize(FreqBright = n()) -> bright_freq
+
+bright_dim_combined <- inner_join(bright_freq, dim_freq, by="Mutation")
+dim(bright_dim_combined)
+
+dim(AA_avg_brightness)
+
+combined_df <- inner_join(AA_avg_brightness, bright_dim_combined, by="Mutation")
+combined_df %>% dim
 
 # Task 4.3
 # For the variants found in both datasets, create a scatterplot to compare their averaged medianBrightness (see task 2) vs. log(bright/dim) ratio. Briefly describe what trends you observe, and whether those are what you would expect.
 # Submit the scatter plot and discussion as part of your hand-in.
-
+combined_df %>%
+  mutate(LogOdds = log10(FreqBright/FreqDim)) %>%
+  ggplot(aes(x=AvgBrightness, y=LogOdds)) + geom_point()
