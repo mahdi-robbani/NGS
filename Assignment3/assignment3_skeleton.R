@@ -21,11 +21,9 @@ nativeDNA <- "AGCAAGGGCGAGGAGCTGTTCACCGGGGTGGTGCCCATCCTGGTCGAGCTGGACGGCGACGTAAAC
 
 # quality control step 1: remove sequences that are too long, too short, or have gaps
 # useful function: nchar()
-#head(Sarkisyan.data)
-
+head(Sarkisyan.data)
 
 filter_sark <- function(df, n){
-  df <- df[df$uniqueBarcodes > 1,]
   df <- df[!grepl("[^ATCG]", df$sequence),] #remove anything without the 4 bases
   df <- df[str_length(df$sequence) == n,]
   return(df)
@@ -91,13 +89,12 @@ nativeAA <- translate(DNAString(nativeDNA))
 nativeAA <- str_split(nativeAA, "")[[1]]
 AA_diff_df <- bind_rows(lapply(filtered_data$SeqID, get_aa_diff, 
                                filtered_data, nativeAA))
-head(AA_diff_df)
+dim(AA_diff_df)
 data_AA <- merge(x = AA_diff_df, y = filtered_data, by = "SeqID", all.x = TRUE)
 
 
 data_AA %>%
   filter(Ref != "X") %>%
-  dim
   mutate(Mutation =paste0(Ref, Pos, Alt)) %>%
   group_by(Mutation) %>%
   summarize(AvgBrightness = mean(medianBrightness), 
