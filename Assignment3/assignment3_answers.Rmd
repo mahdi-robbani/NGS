@@ -9,20 +9,30 @@ output: pdf_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+fix error
+fix count in ex 4.2
+
 ## Task 1
-1383 unique barcodes are found.  
-1104 unique protein sequences are found.  
+56029 unique barcodes are found.  
+51716 unique protein sequences are found.  
 The most common sequence:
-SKGEELFTGVVPILVELDGDVNGHKFSVSGEGEGDATYGKLTLKFICTTGKLPVPWPTLATTLSYGVQCFSRYPDHMKQHDFFKSAMPEGYVQERTIFFKDDGNYKTRAEVKFEGDTLVNRIELKGIDFKEDGNILGHKLEYNYNSHNVYIMADKQKNGIKVNFKIRHNIEDGSVQLADHYQQNTPIGDGPVLLPDNHYLSTQSALSKDPNEKRDHMVLLEFVTAAGITHGMDELYK*
+SKGEELFTGVVPILVELDGDVNGHKFSVSGEGEGDATYGKLTLKFICTTGKLPVPWPTLVTTLSYGVQCFSRYPDHMKQHDFFKSAMPEGYVQERTIFFKDDGNYKTRAEVKFEGDTLVNRIELKGIDFKEDGNILGHKLEYNYNSHNVYIMADKQKNGIKVNLKIRHNIEDGSVQLADHYQQNTPIGDGPVLLPDNHYLSTQSALSKDPNEKRDHMVLLEFVTAAGITHGMDELYK*
 
 ## Task 2
 -Are the deviations you observe beyond what you expect based on the experimental error? Submit plot and discussion as part of your hand-in.
 Scatterplot + discussion
 
+
+
+You can have a harmless mutation that ahs a high single value. If it gets paired with bad mutations it will have a low brightness
+Describe error
+
 -Submit the plots for all 4 distributions as part of your handin
 AA1 and AA2 - do they differ? What would you expect based on biochemistry vs. what do you observe?
 - for synonymous mutations?
 - for missense mutations?
+
+Amino acid biochemical properties. Hydroph
 
 ## Task 3
 
@@ -33,9 +43,10 @@ Submit a plot of the matrix (see e.g. ex. 3) as part of your homework assignment
 They both have an alignment near the end of the sequence. The DNA sequence however some mismatches although when translated to protein, the sequences align perfectly. This is due to the redundancy of the genetic code which allows different codons to code for the same amino acid.
 
 ### 4.2
-249 variants are found in both datasets
-721 variants are found in the Sarkisyan dataset
-525 variants are found in the dataset we used in class
+465 variants are found in both datasets
+1346 variants are found in only the Sarkisyan dataset
+59 variants are found only in the dataset we used in class
 
 ### 4.3
 Scatterplot + discussion
+We expect the brightness and logodds to be proportional. We see there is some relationship
