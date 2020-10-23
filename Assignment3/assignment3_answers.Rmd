@@ -9,44 +9,264 @@ output: pdf_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-fix error
-fix count in ex 4.2
-
 ## Task 1
 56029 unique barcodes are found.  
 51716 unique protein sequences are found.  
-The most common sequence:
-SKGEELFTGVVPILVELDGDVNGHKFSVSGEGEGDATYGKLTLKFICTTGKLPVPWPTLVTTLSYGVQCFSRYPDHMKQHDFFKSAMPEGYVQERTIFFKDDGNYKTRAEVKFEGDTLVNRIELKGIDFKEDGNILGHKLEYNYNSHNVYIMADKQKNGIKVNLKIRHNIEDGSVQLADHYQQNTPIGDGPVLLPDNHYLSTQSALSKDPNEKRDHMVLLEFVTAAGITHGMDELYK*
+The most common sequence:  
+SKGEELFTGVVPILVELDGDVNGHKFSVSGEGEGDATYGKLTLKFICTTGKLPVPWPTLVTTLSYGVQ
+CFSRYPDHMKQHDFFKSAMPEGYVQERTIFFKDDGNYKTRAEVKFEGDTLVNRIELKGIDFKEDGNIL
+GHKLEYNYNSHNVYIMADKQKNGIKVNLKIRHNIEDGSVQLADHYQQNTPIGDGPVLLPDNHYLSTQS
+ALSKDPNEKRDHMVLLEFVTAAGITHGMDELYK*
 
 ## Task 2
--Are the deviations you observe beyond what you expect based on the experimental error? Submit plot and discussion as part of your hand-in.
-Scatterplot + discussion
+**Are the deviations you observe beyond what you expect based on the experimental error? Submit plot and discussion as part of your hand-in.**
+```{r, echo=FALSE, message=FALSE}
+library(tidyverse)
+library(Biostrings)
+
+base_dir <- "data"
+
+# ordering of amino acid by biochemical properties. You don't need to use this. It makes it easier to spot clusters of similar effects that are due to biochemistry.
+colnames.by.AA <- c("G", "A", "V", "L", "I", "M", "F", "W", "P", "S", "T", "C", "Y", "N", "Q", "D", "E", "K", "R", "H")
+
+Sarkisyan.file <- paste(base_dir, "nt_sequences_to_brightness.csv", sep="/")
+Sarkisyan.data <- read.csv(Sarkisyan.file, stringsAsFactors = F)
+colnames(Sarkisyan.data)
+# 
+
+nativeDNA <- "AGCAAGGGCGAGGAGCTGTTCACCGGGGTGGTGCCCATCCTGGTCGAGCTGGACGGCGACGTAAACGGCCACAAGTTCAGCGTGTCCGGCGAGGGCGAGGGCGATGCCACCTACGGCAAGCTGACCCTGAAGTTCATCTGCACCACCGGCAAGCTGCCCGTGCCCTGGCCCACCCTCGTGACCACCCTGTCGTACGGCGTGCAGTGCTTCAGCCGCTACCCCGACCACATGAAGCAGCACGACTTCTTCAAGTCCGCCATGCCCGAAGGCTACGTCCAGGAGCGCACCATCTTCTTCAAGGACGACGGCAACTACAAGACCCGCGCCGAGGTGAAGTTCGAGGGCGACACACTAGTGAACCGCATCGAGCTGAAGGGCATCGACTTCAAGGAGGACGGCAACATCCTGGGGCACAAGCTGGAGTACAACTACAACAGCCACAACGTCTATATCATGGCCGACAAGCAGAAGAACGGCATCAAGGTGAACTTCAAGATCCGCCACAACATCGAGGACGGCAGCGTGCAGCTCGCCGACCACTACCAGCAGAACACCCCCATCGGCGACGGCCCCGTGCTGCTGCCCGACAACCACTACCTGAGCACCCAGTCCGCCCTGAGCAAAGACCCCAACGAGAAGCGCGATCACATGGTCCTGCTGGAGTTCGTGACCGCCGCCGGGATCACTCACGGCATGGACGAGCTGTACAAGTGA"
+
+# translate to protein
+conv_and_translate <- function(string){
+  string <- DNAString(string)
+  string <- translate(string)
+  string <- toString(string)
+  return(string)
+}
+
+Sarkisyan.data$AAsequence <- as.character(lapply(Sarkisyan.data$sequence, 
+                                                conv_and_translate))
 
 
+# quality control step 2: remove sequences with premature STOP codons
+data_no_stop <- Sarkisyan.data[!grepl(".*[*].", Sarkisyan.data$AAsequence),]
 
-You can have a harmless mutation that ahs a high single value. If it gets paired with bad mutations it will have a low brightness
-Describe error
+#filtered_data <- rownames_to_column(filtered_data, "SeqID")
+data_no_stop %>% 
+  group_by(AAsequence) %>%
+  summarize(Brightness = mean(medianBrightness), 
+            Error = sqrt(sum(stdErr^2, na.rm = T)) * 1/length(stdErr[!is.na(stdErr)]),
+            DNA = sequence[1]) -> data_combined_AA
 
--Submit the plots for all 4 distributions as part of your handin
-AA1 and AA2 - do they differ? What would you expect based on biochemistry vs. what do you observe?
-- for synonymous mutations?
-- for missense mutations?
+data_combined_AA$ID <- 1:length(data_combined_AA$AAsequence)
 
-Amino acid biochemical properties. Hydroph
+get_aa_diff <- function(ID, df, native){
+  mutated <- df$AAsequence[df$ID == ID]
+  mutated <- str_split(mutated, "")[[1]]
+  diff_vector <- native != mutated
+  diff_num <- sum(diff_vector)
+  if(sum(diff_vector) > 0){
+    native_base <- native[diff_vector]
+    mutated_base <- mutated[diff_vector]
+    pos <- (1:length(native))[diff_vector]
+  } else{
+    native_base <- "X"
+    mutated_base <- "X"
+    pos <- 0
+  }
+  mut <- paste0(native_base, pos, mutated_base)
+  return(data.frame("Ref" = native_base, 
+                    "Alt" = mutated_base, 
+                    "Pos" = pos,
+                    "Mutation" = mut,
+                    "NumMuts" = diff_num,
+                    "ID" = ID))
+}
+
+nativeAA <- translate(DNAString(nativeDNA))
+nativeAA <- str_split(nativeAA, "")[[1]]
+AA_diff_df <- bind_rows(lapply(data_combined_AA$ID, get_aa_diff, 
+                               data_combined_AA, nativeAA))
+
+data_AA <- merge(x = AA_diff_df, y = data_combined_AA, by = "ID", all.x = TRUE)
+
+data_AA %>%
+  filter(Ref != "X") %>%
+  group_by(Ref, Pos, Alt) %>%
+  summarize(AvgBrightness = mean(Brightness), 
+            AvgStdErr = sqrt(sum(Error^2, na.rm = T)) * 1/length(Error[!is.na(Error)])) %>%
+  mutate(Mutation = paste0(Ref, Pos, Alt)) -> AA_avg_brightness
+
+data_AA %>%
+  filter(Ref != "X") %>%
+  filter(NumMuts == 1) %>%
+  group_by(Mutation) %>%
+  summarize(SingleBrightness = mean(Brightness), 
+            StdErr = sqrt(sum(Error^2, na.rm = T)) * 1/length(Error[!is.na(Error)])) -> AA_brightness_control
+
+AA_brightness_combined <- inner_join(AA_avg_brightness, 
+                                     AA_brightness_control, by="Mutation")
+```
+
+```{r, echo=FALSE, message=FALSE}
+AA_brightness_combined %>%
+  ggplot(aes(x=SingleBrightness, y=AvgBrightness)) + geom_point(col="blue") +
+    geom_errorbar(aes(ymin=AvgBrightness-AvgStdErr, ymax=AvgBrightness+AvgStdErr), alpha=0.4) +
+    geom_errorbarh(aes(xmin=SingleBrightness-StdErr, xmax=SingleBrightness+StdErr), alpha=0.4) + 
+  geom_abline(intercept = 0, slope = 1, color="red", 
+                 linetype="dashed")
+```
+
+Since we know the majority of mutations lead to a decrease in fitness, we expect the brightness across sequences with multiple mutation to be smaller than the brightness for sequences with a single mutation. For example, Mutation A results in high fitness so the Brightness for sequences with single mutations (only Mutation A) will be high. But many sequences may have Mutation A along with additional mutations which reduce the fitness and hence brightness, so when taking the average of all those sequences, the brightness will be lower.
+
+From the plot we can see two main clusters, one where both brightness across sequences and the brightness for single mutation sequences are high and one where both are low. However, the single mutation brightness is lower than the brightness across sequences for the majority of mutations, which is as expected.
+
+Many points have large error values for both brightness values, while some points do not have any error bars because the sequeunce had a unique Barcode of 1 and thus no error value was recorded.
+
+**Submit the plots for all 4 distributions as part of your handin**
+
+```{r, echo=FALSE, message=FALSE}
+compare_letters <- function(A, B, data){
+  data %>%
+    filter(Ref == A) %>%
+    select(AvgBrightness) %>%
+    mutate(Group = "To All", AA = A) -> dist1
+  
+  data %>%
+    filter(Ref == B) %>%
+    select(AvgBrightness) %>%
+    mutate(Group = "To All", AA = B) -> dist2
+  
+  data %>%
+    filter(Alt == A) %>%
+    select(AvgBrightness) %>%
+    mutate(Group = "To Res", AA = A) -> dist3
+  
+  data %>%
+    filter(Alt == B) %>%
+    select(AvgBrightness) %>%
+    mutate(Group = "To Res", AA = B) -> dist4
+  
+  dist <- rbind(dist1,dist2,dist3,dist4)
+  return(dist)
+}
+```
+```{r, echo=FALSE, message=FALSE}
+compare_letters("I", "R", AA_avg_brightness) %>%
+  ggplot(aes(x=AvgBrightness, fill=AA)) + 
+  geom_density(alpha=0.5) +
+  facet_wrap(~Group)
+```
+
+For a synonymous mutation, we expect the brightness to remain high because the sequence is unchanged. For an missense mutation, we expect the brightness to be comparitively high if the mutation doesn't significantly alter the properties of the amino acid. If The property is altered, then the brightness is expected to be low due to decreased fitness. The location of the mutation also plays a role as mutations in some locations will not affect the fitness much while other locations will have a large effect.
+
+Isoleucine is a hydrophobic amino acid while Arginine is a hydrophilic amino acid. From the plot on the left, we can see that multiple peaks form where each peak may either correspond to the chosen residue being converted to a residue of the opposite group, which results in a peak with low brightness/fitness and a peak with higher brightness which corresponds to the residue being changed to a residue of the same group and thus have a higher fitness.
+
+Similarly, for the plot on the right, we can see three peaks when mutating all amino acids to arginine. The large peak with a low brightness is porbnably caused by hydrophobic amino acids, while the middle and small large peak may have been caused by hydrphilic amino acids, or mutations at certain locations that strongly increased the fitness. This may be because mutating a hydrophobic amino acid in the core of the preotein may have destabilized it. Mutation to Isoleucine resulted in most sequences having a medium brightness probably because the neither the core nor the outer regions were strongly affected by this change.
 
 ## Task 3
 
-Submit a plot of the matrix (see e.g. ex. 3) as part of your homework assignment.
+```{r, echo=FALSE, message=FALSE}
+data_AA %>%
+  select(Ref, Alt, Brightness) %>%
+  add_row(Ref = colnames.by.AA, Alt = "X", Brightness = 0) %>%
+  add_row(Alt = colnames.by.AA, Ref = "X", Brightness = 0) %>%
+  group_by(Ref, Alt) %>%
+  summarize(Brightness = mean(Brightness)) %>%
+  filter(Ref != "X" & Alt != "X") -> mut_data
+
+mut_data$Ref <- factor(mut_data$Ref, levels = colnames.by.AA) 
+mut_data$Alt <- factor(mut_data$Alt, levels = colnames.by.AA)
+mut_data %>%
+  ggplot(aes(x=Ref, y=Alt, fill= Brightness)) + geom_tile() +
+  scale_fill_gradientn(colours = c("white", "yellow", "red"), 
+                       values = c(0,0.5,1))
+
+```
+
 
 ## Task 4
 ### 4.1
-They both have an alignment near the end of the sequence. The DNA sequence however some mismatches although when translated to protein, the sequences align perfectly. This is due to the redundancy of the genetic code which allows different codons to code for the same amino acid.
+The DNA from the exercise aligns to the DNA from the assignment at position 397.
+The Protein from the exercise aligns to the Protein from the assignment at position 133. 
+The protein sequences align perfectly except for the last amino acid in the exercise protein which is replaced by a stop. In contrast, the DNA sequence has many mismatches throughout the alignment. This is due to the redundancy of the genetic code which allows different codons to code for the same amino acid.
 
 ### 4.2
-465 variants are found in both datasets
-1346 variants are found in only the Sarkisyan dataset
-59 variants are found only in the dataset we used in class
+465 variants are found in both datasets  
+1346 variants are found in only the Sarkisyan dataset  
+59 variants are found only in the dataset we used in class  
 
 ### 4.3
-Scatterplot + discussion
-We expect the brightness and logodds to be proportional. We see there is some relationship
+```{r, echo=FALSE, message=FALSE}
+nativeDNA_1 <- readDNAStringSet("data/native_DNA.fa")
+nativeAA_1 <- translate(nativeDNA_1$seq)
+
+filter_gfp <- function(df, n){
+  df <- df[df$V1 > 4,]
+  df <- df[!grepl("[^ATCG]", df$V2),] #remove anything without the 4 bases
+  df <- df[str_length(df$V2) == n,]
+  return(df)
+}
+
+translate_gfp <- function(df){
+  df$V3 <- as.character(lapply(df$V2, conv_and_translate))
+  df <- df[!grepl(".*[*].", df$V3),]
+  colnames(df) <- c("Count", "DNA", "AAsequence")
+  return(df)
+}
+
+get_diff_df_gfp <- function(seq_df, nativeDNA){
+  #calculate length of DNA and create AA list
+  N <- str_length(nativeDNA$seq)
+  nativeAA <- translate(nativeDNA$seq)
+  nativeAA <- str_split(nativeAA, "")[[1]]
+  #filter, trnslate and add seqID
+  seq_df <- filter_gfp(seq_df, N)
+  seq_df <- translate_gfp(seq_df)
+  seq_df <- rownames_to_column(seq_df, "ID")
+  #calculate differences between native and seq
+  diff_df <-  bind_rows(lapply(seq_df$ID, get_aa_diff, 
+                               seq_df, nativeAA))
+  diff_df$Pos <- diff_df$Pos + 132 #alignment
+  diff_df$Mutation <- paste0(diff_df$Ref, diff_df$Pos, diff_df$Alt) #fix mutations
+  # merge the dataframes
+  seq_df <- merge(x = diff_df, y = seq_df, by = "ID", all.x = TRUE)
+  return(seq_df)
+}
+
+# get dim freq
+dim_df <- read.table("data/dim_GFP_beads.counts", stringsAsFactors = F)
+dim_df <- get_diff_df_gfp(dim_df, nativeDNA_1)
+
+dim_df %>%
+  filter(Ref != "X") %>%
+  group_by(Mutation) %>%
+  summarize(FreqDim = n()) -> dim_freq
+
+
+# get bright freq
+bright_df <- read.table("data/bright_GFP_beads.counts", stringsAsFactors = F)
+bright_df <- get_diff_df_gfp(bright_df, nativeDNA_1)
+
+
+bright_df %>%
+  filter(Ref != "X") %>%
+  group_by(Mutation) %>%
+  summarize(FreqBright = n()) -> bright_freq
+
+
+#combined dim and bright to gfp
+bright_dim_combined <- inner_join(bright_freq, dim_freq, by="Mutation")
+
+#combine sark with gfp
+combined_df <- inner_join(AA_avg_brightness, bright_dim_combined, by="Mutation")
+```
+
+```{r, echo=FALSE, message=FALSE}
+combined_df %>%
+  mutate(LogOdds = log10(FreqBright/FreqDim)) %>%
+  ggplot(aes(x=AvgBrightness, y=LogOdds)) + geom_point() +
+  geom_smooth(method = "lm")
+```
+
+A logOdds value greater than zero tells us a mutation is more prevalent in the bright dataset which means it has a higher fitness. Conversley, a logsodds value less than zero tells us the mutation has low brightness. Since the two sequences align perfectly, we would expect a high fitness in one to indicate a high fitness in the other, which would mean we expect a high brightness across sequences to correspond to a high log odds ratio. We observe a positive correlation between the two values, which is what we expect. Although the correlation is not very strong which may be explained by a variety of causes such as loss of useful data when filtering the exercise dataset, the two proteins being differently affected by the mutations due to their different size, noise in the data, etc.

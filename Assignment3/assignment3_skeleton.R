@@ -15,6 +15,7 @@ colnames(Sarkisyan.data)
 # 
 
 nativeDNA <- "AGCAAGGGCGAGGAGCTGTTCACCGGGGTGGTGCCCATCCTGGTCGAGCTGGACGGCGACGTAAACGGCCACAAGTTCAGCGTGTCCGGCGAGGGCGAGGGCGATGCCACCTACGGCAAGCTGACCCTGAAGTTCATCTGCACCACCGGCAAGCTGCCCGTGCCCTGGCCCACCCTCGTGACCACCCTGTCGTACGGCGTGCAGTGCTTCAGCCGCTACCCCGACCACATGAAGCAGCACGACTTCTTCAAGTCCGCCATGCCCGAAGGCTACGTCCAGGAGCGCACCATCTTCTTCAAGGACGACGGCAACTACAAGACCCGCGCCGAGGTGAAGTTCGAGGGCGACACACTAGTGAACCGCATCGAGCTGAAGGGCATCGACTTCAAGGAGGACGGCAACATCCTGGGGCACAAGCTGGAGTACAACTACAACAGCCACAACGTCTATATCATGGCCGACAAGCAGAAGAACGGCATCAAGGTGAACTTCAAGATCCGCCACAACATCGAGGACGGCAGCGTGCAGCTCGCCGACCACTACCAGCAGAACACCCCCATCGGCGACGGCCCCGTGCTGCTGCCCGACAACCACTACCTGAGCACCCAGTCCGCCCTGAGCAAAGACCCCAACGAGAAGCGCGATCACATGGTCCTGCTGGAGTTCGTGACCGCCGCCGGGATCACTCACGGCATGGACGAGCTGTACAAGTGA"
+nativeAA <- translate(DNAString(nativeDNA))
 
 # Task 1: quality control and translation
 # ---------------------------------------
@@ -49,7 +50,8 @@ data_no_stop <- Sarkisyan.data[!grepl(".*[*].", Sarkisyan.data$AAsequence),]
 #filtered_data <- rownames_to_column(filtered_data, "SeqID")
 data_no_stop %>% 
   group_by(AAsequence) %>%
-  summarize(Brightness = mean(medianBrightness), 
+  summarize(Barcode = sum(uniqueBarcodes),
+            Brightness = mean(medianBrightness), 
             Error = sqrt(sum(stdErr^2, na.rm = T)) * 1/length(stdErr[!is.na(stdErr)]),
             DNA = sequence[1]) -> data_combined_AA
 
@@ -59,12 +61,14 @@ data_combined_AA$ID <- 1:length(data_combined_AA$AAsequence)
 # How many unique barcodes (=DNA variant sequences) are found? How many unique protein sequences after cleanup? What is the most common protein sequence that is not wild-type? Include your answers in your hand-in.
 paste("Unique Barcodes:", length(unique(data_no_stop$sequence)))
 paste("Unique Proteins:", length(unique(data_no_stop$AAsequence)))
-count_df <- data.frame(table(data_no_stop$AAsequence))
-count_df %>%
-  arrange(desc(Freq)) %>%
-  filter(Freq == 22) %>%
-  select(Var1) %>%
-  head(1)
+
+data_combined_AA %>% 
+  filter(AAsequence != as.character(nativeAA)) %>%
+  arrange(desc(Barcode)) %>%
+  select(AAsequence) %>%
+  head(1) %>% 
+  as.character()
+
 
 # Task 2: protein-level variants
 # ------------------------------
@@ -168,16 +172,10 @@ compare_letters <- function(A, B, data){
   return(dist)
 }
 
-data_AA %>%
-  filter(Ref == "X") %>%
-  select(Brightness) -> nonsyn
-nonsyn <- nonsyn$Brightness
-
 compare_letters("S", "P", AA_avg_brightness) %>%
   ggplot(aes(x=AvgBrightness, fill=Group)) + 
   geom_density(alpha=0.5) +
-  facet_wrap(~AA) +
-  geom_vline(xintercept=nonsyn, col="red")
+  facet_wrap(~AA)
 
 # Task 3: summary matrix
 # ----------------------
@@ -213,7 +211,6 @@ mut_data %>%
 nativeDNA_1 <- readDNAStringSet("data/native_DNA.fa")
 pairwiseAlignment(nativeDNA, nativeDNA_1)
 
-nativeAA <- translate(DNAString(nativeDNA))
 nativeAA_1 <- translate(nativeDNA_1$seq)
 AA_alignment <- pairwiseAlignment(nativeAA, nativeAA_1)
 AA_alignment
