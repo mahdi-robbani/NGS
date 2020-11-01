@@ -1,0 +1,22 @@
+---
+title: "Assignment 4.1"
+author: "Mahdi"
+date: "October 31, 2020"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### Which is the ancestral state of the OBP gene family size in the phylogeny?
+
+TREE OBPs = (((((((((((dmel<5>_52:5,(dsec<1>_51:1,dsim<0>_53:1)<4>_52:4)<7>_52:8,(dyak<3>_55:10,dere<2>_50:10)<6>_52:3)<11>_52:31,dana<10>_50:44)<15>_50:11,(dpse<9>_45:1,dper<8>_45:1)<14>_45:54)<19>_49:7,dwil<18>\*_62:62)<21>_49:1,((dmoj<13>_43:31,dvir<12>_41:31)<17>_44:12,dgri<16>_46:43)<20>_46:20)<23>_49:187,agam<22>\*_83:250)<25>_44:10,bmor<24>_46:260)<27>_43:20,tcas<26>_49:280)<31>_40:20,amel<30>_21:300)<33>_36:50,(phum<29>\*_5:260,apis<28>_18:260)<32>*_21:90)<34>_30;
+
+The ancestral state (34) has a size of 30.
+
+
+### Which is the general mode of evolution of the OBP gene family across Hexapoda? Has it undergone different dynamics across the surveyed species?
+
+In general the number of genes has increased. 
+
