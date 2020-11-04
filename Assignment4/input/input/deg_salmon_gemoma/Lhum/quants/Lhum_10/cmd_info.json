@@ -1,0 +1,18 @@
+{
+    "salmon_version": "0.8.2",
+    "index": "/seqdata/krogh/cse/bitao/gene_age_mar_2017/ref_genome/Lhum/Lhum",
+    "libType": "A",
+    "mates1": [
+        "/seqdata/krogh/cse/bitao/gene_age_mar_2017/raw_data/sorted/Lhum/Lhum_10/170325_I133_FCHGL5TBBXX_L7_RDWHANTosqDAAVRAAPEI-33/170325_I133_FCHGL5TBBXX_L7_RDWHANTosqDAAVRAAPEI-33_1.fq.gz",
+        "/seqdata/krogh/cse/bitao/gene_age_mar_2017/raw_data/sorted/Lhum/Lhum_10/170325_I133_FCHGL5TBBXX_L8_RDWHANTosqDAAVRAAPEI-33/170325_I133_FCHGL5TBBXX_L8_RDWHANTosqDAAVRAAPEI-33_1.fq.gz"
+    ],
+    "mates2": [
+        "/seqdata/krogh/cse/bitao/gene_age_mar_2017/raw_data/sorted/Lhum/Lhum_10/170325_I133_FCHGL5TBBXX_L7_RDWHANTosqDAAVRAAPEI-33/170325_I133_FCHGL5TBBXX_L7_RDWHANTosqDAAVRAAPEI-33_2.fq.gz",
+        "/seqdata/krogh/cse/bitao/gene_age_mar_2017/raw_data/sorted/Lhum/Lhum_10/170325_I133_FCHGL5TBBXX_L8_RDWHANTosqDAAVRAAPEI-33/170325_I133_FCHGL5TBBXX_L8_RDWHANTosqDAAVRAAPEI-33_2.fq.gz"
+    ],
+    "seqBias": [],
+    "gcBias": [],
+    "threads": "10",
+    "output": "quants/Lhum_10",
+    "auxDir": "aux_info"
+}

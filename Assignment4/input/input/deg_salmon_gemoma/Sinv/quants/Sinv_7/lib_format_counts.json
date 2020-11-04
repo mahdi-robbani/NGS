@@ -1,0 +1,22 @@
+{
+    "read_files": "( /seqdata/krogh/cse/bitao/gene_age_mar_2017/raw_data/Sinv/Sinv_7/ST_FG03_TAGCTT_L001_R1_001.fastq.gz, /seqdata/krogh/cse/bitao/gene_age_mar_2017/raw_data/Sinv/Sinv_7/ST_FG03_TAGCTT_L001_R2_001.fastq.gz ), ( /seqdata/krogh/cse/bitao/gene_age_mar_2017/raw_data/Sinv/Sinv_7/ST_FG03_TAGCTT_L001_R1_002.fastq.gz, /seqdata/krogh/cse/bitao/gene_age_mar_2017/raw_data/Sinv/Sinv_7/ST_FG03_TAGCTT_L001_R2_002.fastq.gz ), ( /seqdata/krogh/cse/bitao/gene_age_mar_2017/raw_data/Sinv/Sinv_7/ST_FG03_TAGCTT_L001_R1_003.fastq.gz, /seqdata/krogh/cse/bitao/gene_age_mar_2017/raw_data/Sinv/Sinv_7/ST_FG03_TAGCTT_L001_R2_003.fastq.gz ), ( /seqdata/krogh/cse/bitao/gene_age_mar_2017/raw_data/Sinv/Sinv_7/ST_FG03_TAGCTT_L001_R1_004.fastq.gz, /seqdata/krogh/cse/bitao/gene_age_mar_2017/raw_data/Sinv/Sinv_7/ST_FG03_TAGCTT_L001_R2_004.fastq.gz ), ( /seqdata/krogh/cse/bitao/gene_age_mar_2017/raw_data/Sinv/Sinv_7/ST_FG03_TAGCTT_L001_R1_005.fastq.gz, /seqdata/krogh/cse/bitao/gene_age_mar_2017/raw_data/Sinv/Sinv_7/ST_FG03_TAGCTT_L001_R2_005.fastq.gz ), ( /seqdata/krogh/cse/bitao/gene_age_mar_2017/raw_data/Sinv/Sinv_7/ST_FG03_TAGCTT_L001_R1_006.fastq.gz, /seqdata/krogh/cse/bitao/gene_age_mar_2017/raw_data/Sinv/Sinv_7/ST_FG03_TAGCTT_L001_R2_006.fastq.gz ), ( /seqdata/krogh/cse/bitao/gene_age_mar_2017/raw_data/Sinv/Sinv_7/ST_FG03_TAGCTT_L001_R1_007.fastq.gz, /seqdata/krogh/cse/bitao/gene_age_mar_2017/raw_data/Sinv/Sinv_7/ST_FG03_TAGCTT_L001_R2_007.fastq.gz ), ( /seqdata/krogh/cse/bitao/gene_age_mar_2017/raw_data/Sinv/Sinv_7/ST_FG03_TAGCTT_L001_R1_008.fastq.gz, /seqdata/krogh/cse/bitao/gene_age_mar_2017/raw_data/Sinv/Sinv_7/ST_FG03_TAGCTT_L001_R2_008.fastq.gz )",
+    "expected_format": "IU",
+    "compatible_fragment_ratio": 0.9967202632956717,
+    "num_compatible_fragments": 12003238,
+    "num_assigned_fragments": 12042735,
+    "num_consistent_mappings": 13617857,
+    "num_inconsistent_mappings": 2806295,
+    "strand_mapping_bias": 0.49855656436985648,
+    "MSF": 0,
+    "OSF": 3266,
+    "ISF": 6828585,
+    "MSR": 0,
+    "OSR": 3133,
+    "ISR": 6789272,
+    "SF": 1365239,
+    "SR": 1388128,
+    "MU": 0,
+    "OU": 0,
+    "IU": 0,
+    "U": 0
+}

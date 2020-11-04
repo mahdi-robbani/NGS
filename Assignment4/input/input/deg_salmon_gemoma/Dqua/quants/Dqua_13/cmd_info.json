@@ -1,0 +1,12 @@
+{
+    "salmon_version": "0.8.2",
+    "index": "/seqdata/krogh/cse/bitao/gene_age_mar_2017/ref_genome/Dqua/Dqua",
+    "libType": "A",
+    "mates1": "/seqdata/krogh/cse/bitao/gene_age_mar_2017/raw_data/Dqua/Dqua_13/SRR1519130_1.fastq",
+    "mates2": "/seqdata/krogh/cse/bitao/gene_age_mar_2017/raw_data/Dqua/Dqua_13/SRR1519130_2.fastq",
+    "seqBias": [],
+    "gcBias": [],
+    "threads": "10",
+    "output": "quants/Dqua_13",
+    "auxDir": "aux_info"
+}

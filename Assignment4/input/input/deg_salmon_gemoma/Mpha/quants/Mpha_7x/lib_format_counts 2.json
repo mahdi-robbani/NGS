@@ -1,0 +1,22 @@
+{
+    "read_files": "( /isdata/cse/bitao/gene_age_mar_2017/raw_data/Added/Mpha/Mpha_7x/180220_X602_FCHHWY5CCXY_L7_RDWHANTosqDAAKRAAPEI-19_1.fq.gz, /isdata/cse/bitao/gene_age_mar_2017/raw_data/Added/Mpha/Mpha_7x/180220_X602_FCHHWY5CCXY_L7_RDWHANTosqDAAKRAAPEI-19_2.fq.gz )",
+    "expected_format": "IU",
+    "compatible_fragment_ratio": 1.0,
+    "num_compatible_fragments": 21628643,
+    "num_assigned_fragments": 21628643,
+    "num_frags_with_consistent_mappings": 13864387,
+    "num_frags_with_inconsistent_or_orphan_mappings": 7782821,
+    "strand_mapping_bias": 0.4937425650337083,
+    "MSF": 0,
+    "OSF": 0,
+    "ISF": 7018949,
+    "MSR": 0,
+    "OSR": 0,
+    "ISR": 6845438,
+    "SF": 5256279,
+    "SR": 2526542,
+    "MU": 0,
+    "OU": 0,
+    "IU": 0,
+    "U": 0
+}

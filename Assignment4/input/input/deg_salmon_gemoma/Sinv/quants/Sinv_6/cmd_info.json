@@ -1,0 +1,30 @@
+{
+    "salmon_version": "0.8.2",
+    "index": "/seqdata/krogh/cse/bitao/gene_age_mar_2017/ref_genome/Sinv/Sinv",
+    "libType": "A",
+    "mates1": [
+        "/seqdata/krogh/cse/bitao/gene_age_mar_2017/raw_data/Sinv/Sinv_6/ST_FG02_ACTTGA_L001_R1_001.fastq.gz",
+        "/seqdata/krogh/cse/bitao/gene_age_mar_2017/raw_data/Sinv/Sinv_6/ST_FG02_ACTTGA_L001_R1_002.fastq.gz",
+        "/seqdata/krogh/cse/bitao/gene_age_mar_2017/raw_data/Sinv/Sinv_6/ST_FG02_ACTTGA_L001_R1_003.fastq.gz",
+        "/seqdata/krogh/cse/bitao/gene_age_mar_2017/raw_data/Sinv/Sinv_6/ST_FG02_ACTTGA_L001_R1_004.fastq.gz",
+        "/seqdata/krogh/cse/bitao/gene_age_mar_2017/raw_data/Sinv/Sinv_6/ST_FG02_ACTTGA_L001_R1_005.fastq.gz",
+        "/seqdata/krogh/cse/bitao/gene_age_mar_2017/raw_data/Sinv/Sinv_6/ST_FG02_ACTTGA_L001_R1_006.fastq.gz",
+        "/seqdata/krogh/cse/bitao/gene_age_mar_2017/raw_data/Sinv/Sinv_6/ST_FG02_ACTTGA_L001_R1_007.fastq.gz",
+        "/seqdata/krogh/cse/bitao/gene_age_mar_2017/raw_data/Sinv/Sinv_6/ST_FG02_ACTTGA_L001_R1_008.fastq.gz"
+    ],
+    "mates2": [
+        "/seqdata/krogh/cse/bitao/gene_age_mar_2017/raw_data/Sinv/Sinv_6/ST_FG02_ACTTGA_L001_R2_001.fastq.gz",
+        "/seqdata/krogh/cse/bitao/gene_age_mar_2017/raw_data/Sinv/Sinv_6/ST_FG02_ACTTGA_L001_R2_002.fastq.gz",
+        "/seqdata/krogh/cse/bitao/gene_age_mar_2017/raw_data/Sinv/Sinv_6/ST_FG02_ACTTGA_L001_R2_003.fastq.gz",
+        "/seqdata/krogh/cse/bitao/gene_age_mar_2017/raw_data/Sinv/Sinv_6/ST_FG02_ACTTGA_L001_R2_004.fastq.gz",
+        "/seqdata/krogh/cse/bitao/gene_age_mar_2017/raw_data/Sinv/Sinv_6/ST_FG02_ACTTGA_L001_R2_005.fastq.gz",
+        "/seqdata/krogh/cse/bitao/gene_age_mar_2017/raw_data/Sinv/Sinv_6/ST_FG02_ACTTGA_L001_R2_006.fastq.gz",
+        "/seqdata/krogh/cse/bitao/gene_age_mar_2017/raw_data/Sinv/Sinv_6/ST_FG02_ACTTGA_L001_R2_007.fastq.gz",
+        "/seqdata/krogh/cse/bitao/gene_age_mar_2017/raw_data/Sinv/Sinv_6/ST_FG02_ACTTGA_L001_R2_008.fastq.gz"
+    ],
+    "seqBias": [],
+    "gcBias": [],
+    "threads": "10",
+    "output": "quants/Sinv_6",
+    "auxDir": "aux_info"
+}

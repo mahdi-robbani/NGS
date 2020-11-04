@@ -1,0 +1,12 @@
+{
+    "salmon_version": "0.8.2",
+    "index": "/seqdata/krogh/cse/bitao/gene_age_mar_2017/ref_genome/Cbir/Cbir",
+    "libType": "A",
+    "mates1": "/seqdata/krogh/cse/bitao/gene_age_mar_2017/raw_data/Cbir/Cbir_4/SRR2969437_1.fastq",
+    "mates2": "/seqdata/krogh/cse/bitao/gene_age_mar_2017/raw_data/Cbir/Cbir_4/SRR2969437_2.fastq",
+    "seqBias": [],
+    "gcBias": [],
+    "threads": "10",
+    "output": "quants/Cbir_4",
+    "auxDir": "aux_info"
+}

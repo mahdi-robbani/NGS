@@ -1,0 +1,20 @@
+{
+    "salmon_version": "0.8.2",
+    "index": "/isdata/cse/bitao/gene_age_mar_2017/ref_genome/Lnig/Lnig",
+    "libType": "A",
+    "mates1": [
+        "/isdata/cse/bitao/gene_age_mar_2017/raw_data/Lnig_2//Q2m_br6/SRR3139048_1.fastq",
+        "/isdata/cse/bitao/gene_age_mar_2017/raw_data/Lnig_2//Q2m_br6/SRR3141079_1.fastq",
+        "/isdata/cse/bitao/gene_age_mar_2017/raw_data/Lnig_2//Q2m_br6/SRR3141284_1.fastq"
+    ],
+    "mates2": [
+        "/isdata/cse/bitao/gene_age_mar_2017/raw_data/Lnig_2//Q2m_br6/SRR3139048_2.fastq",
+        "/isdata/cse/bitao/gene_age_mar_2017/raw_data/Lnig_2//Q2m_br6/SRR3141079_2.fastq",
+        "/isdata/cse/bitao/gene_age_mar_2017/raw_data/Lnig_2//Q2m_br6/SRR3141284_2.fastq"
+    ],
+    "seqBias": [],
+    "gcBias": [],
+    "threads": "10",
+    "output": "quants/Q2m_br6",
+    "auxDir": "aux_info"
+}

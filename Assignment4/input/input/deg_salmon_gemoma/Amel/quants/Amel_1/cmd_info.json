@@ -1,0 +1,11 @@
+{
+    "salmon_version": "0.8.2",
+    "index": "/isdata/cse/bitao/common/Amel/Amel",
+    "libType": "A",
+    "unmatedReads": "/isdata/cse/bitao/gene_age_mar_2017/raw_data/Amel/SRR2954344.fastq",
+    "seqBias": [],
+    "gcBias": [],
+    "threads": "10",
+    "output": "quants//SRR2954344.fastq",
+    "auxDir": "aux_info"
+}

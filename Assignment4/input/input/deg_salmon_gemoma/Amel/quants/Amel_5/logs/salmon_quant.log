@@ -1,0 +1,54 @@
+[2017-07-11 18:36:17.592] [jointLog] [info] parsing read library format
+[2017-07-11 18:36:17.592] [jointLog] [info] There is 1 library.
+[2017-07-11 18:36:17.687] [jointLog] [info] Loading Quasi index
+[2017-07-11 18:36:17.688] [jointLog] [info] Loading 32-bit quasi index
+[2017-07-11 18:36:20.857] [jointLog] [info] done
+[2017-07-11 18:36:20.857] [jointLog] [info] Index contained 28739 targets
+[2017-07-11 18:36:21.690] [jointLog] [warning] Fragment GC bias correction is currently *experimental* in single-end libraries.  Please use this option with caution.
+[2017-07-11 18:36:29.303] [jointLog] [info] Automatically detected most likely library type as U
+[2017-07-11 18:44:45.798] [fileLog] [info] 
+At end of round 0
+==================
+Observed 168267063 total fragments (168267063 in most recent round)
+
+[2017-07-11 18:44:45.796] [jointLog] [info] Computed 49617 rich equivalence classes for further processing
+[2017-07-11 18:44:45.796] [jointLog] [info] Counted 146404179 total reads in the equivalence classes 
+[2017-07-11 18:44:45.869] [jointLog] [info] Mapping rate = 87.007%
+
+[2017-07-11 18:44:45.869] [jointLog] [info] finished quantifyLibrary()
+[2017-07-11 18:44:45.873] [jointLog] [info] Starting optimizer
+[2017-07-11 18:44:45.902] [jointLog] [info] Marked 0 weighted equivalence classes as degenerate
+[2017-07-11 18:44:45.906] [jointLog] [info] iteration = 0 | max rel diff. = 2.8003
+[2017-07-11 18:44:45.940] [jointLog] [info] iteration 11, adjusting effective lengths to account for biases
+[2017-07-11 18:45:47.574] [jointLog] [info] Computed expected counts (for bias correction)
+[2017-07-11 18:45:47.575] [jointLog] [info] processed bias for 0.0% of the transcripts
+[2017-07-11 18:45:53.883] [jointLog] [info] processed bias for 10.0% of the transcripts
+[2017-07-11 18:45:59.560] [jointLog] [info] processed bias for 20.0% of the transcripts
+[2017-07-11 18:46:05.971] [jointLog] [info] processed bias for 30.0% of the transcripts
+[2017-07-11 18:46:12.420] [jointLog] [info] processed bias for 40.0% of the transcripts
+[2017-07-11 18:46:18.937] [jointLog] [info] processed bias for 50.0% of the transcripts
+[2017-07-11 18:46:25.145] [jointLog] [info] processed bias for 60.0% of the transcripts
+[2017-07-11 18:46:31.954] [jointLog] [info] processed bias for 70.0% of the transcripts
+[2017-07-11 18:46:38.513] [jointLog] [info] processed bias for 80.0% of the transcripts
+[2017-07-11 18:46:45.695] [jointLog] [info] processed bias for 90.0% of the transcripts
+[2017-07-11 18:46:51.901] [jointLog] [info] processed bias for 100.0% of the transcripts
+[2017-07-11 18:46:52.185] [jointLog] [info] iteration = 100 | max rel diff. = 0.13368
+[2017-07-11 18:46:52.493] [jointLog] [info] iteration = 200 | max rel diff. = 0.0533534
+[2017-07-11 18:46:52.803] [jointLog] [info] iteration = 300 | max rel diff. = 0.0428594
+[2017-07-11 18:46:53.112] [jointLog] [info] iteration = 400 | max rel diff. = 0.0334518
+[2017-07-11 18:46:53.416] [jointLog] [info] iteration = 500 | max rel diff. = 0.0299816
+[2017-07-11 18:46:53.713] [jointLog] [info] iteration = 600 | max rel diff. = 0.0200266
+[2017-07-11 18:46:54.013] [jointLog] [info] iteration = 700 | max rel diff. = 0.0192541
+[2017-07-11 18:46:54.313] [jointLog] [info] iteration = 800 | max rel diff. = 0.0155554
+[2017-07-11 18:46:54.613] [jointLog] [info] iteration = 900 | max rel diff. = 0.0133682
+[2017-07-11 18:46:54.915] [jointLog] [info] iteration = 1000 | max rel diff. = 0.0127129
+[2017-07-11 18:46:55.215] [jointLog] [info] iteration = 1100 | max rel diff. = 0.0117406
+[2017-07-11 18:46:55.519] [jointLog] [info] iteration = 1200 | max rel diff. = 0.0109486
+[2017-07-11 18:46:55.663] [jointLog] [info] iteration = 1250 | max rel diff. = 0.00991866
+[2017-07-11 18:46:55.665] [jointLog] [info] Finished optimizer
+[2017-07-11 18:46:55.665] [jointLog] [info] writing output 
+
+[2017-07-11 18:46:55.749] [jointLog] [warning] NOTE: Read Lib [/isdata/cse/bitao/gene_age_mar_2017/raw_data/Amel/SRR789760.fastq] :
+
+Detected a *potential* strand bias > 1% in an unstranded protocol check the file: quants//SRR789760.fastq/lib_format_counts.json for details
+

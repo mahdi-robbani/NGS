@@ -1,0 +1,22 @@
+{
+    "read_files": "/isdata/cse/bitao/gene_age_mar_2017/raw_data/Amel/SRR2954344.fastq",
+    "expected_format": "U",
+    "compatible_fragment_ratio": 1.0,
+    "num_compatible_fragments": 181055288,
+    "num_assigned_fragments": 181055288,
+    "num_consistent_mappings": 459417662,
+    "num_inconsistent_mappings": 0,
+    "strand_mapping_bias": 0.5024170664122182,
+    "MSF": 0,
+    "OSF": 0,
+    "ISF": 0,
+    "MSR": 0,
+    "OSR": 0,
+    "ISR": 0,
+    "SF": 230819274,
+    "SR": 228598388,
+    "MU": 0,
+    "OU": 0,
+    "IU": 0,
+    "U": 0
+}

@@ -1,0 +1,20 @@
+{
+    "salmon_version": "0.11.1",
+    "index": "./Mpha_ERCC",
+    "libType": "A",
+    "mates1": [
+        "/isdata/cse/bitao/gene_age_mar_2017/raw_data/Added/Mpha/Mpha_4/180220_X602_FCHHWY5CCXY_L6_RDWHANTosqDAADRAAPEI-12_1.fq.gz",
+        "/isdata/cse/bitao/gene_age_mar_2017/raw_data/sorted/Mpha/Mpha_4/170325_I133_FCHGL5TBBXX_L5_RDWHANTosqDAADRAAPEI-12/170325_I133_FCHGL5TBBXX_L5_RDWHANTosqDAADRAAPEI-12_1.fq.gz",
+        "/isdata/cse/bitao/gene_age_mar_2017/raw_data/sorted/Mpha/Mpha_4/170325_I133_FCHGL5TBBXX_L6_RDWHANTosqDAADRAAPEI-12/170325_I133_FCHGL5TBBXX_L6_RDWHANTosqDAADRAAPEI-12_1.fq.gz"
+    ],
+    "mates2": [
+        "/isdata/cse/bitao/gene_age_mar_2017/raw_data/Added/Mpha/Mpha_4/180220_X602_FCHHWY5CCXY_L6_RDWHANTosqDAADRAAPEI-12_2.fq.gz",
+        "/isdata/cse/bitao/gene_age_mar_2017/raw_data/sorted/Mpha/Mpha_4/170325_I133_FCHGL5TBBXX_L5_RDWHANTosqDAADRAAPEI-12/170325_I133_FCHGL5TBBXX_L5_RDWHANTosqDAADRAAPEI-12_2.fq.gz",
+        "/isdata/cse/bitao/gene_age_mar_2017/raw_data/sorted/Mpha/Mpha_4/170325_I133_FCHGL5TBBXX_L6_RDWHANTosqDAADRAAPEI-12/170325_I133_FCHGL5TBBXX_L6_RDWHANTosqDAADRAAPEI-12_2.fq.gz"
+    ],
+    "output": "quants/Mpha_4",
+    "threads": "10",
+    "seqBias": [],
+    "gcBias": [],
+    "auxDir": "aux_info"
+}

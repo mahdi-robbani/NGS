@@ -1,0 +1,18 @@
+{
+    "salmon_version": "0.8.2",
+    "index": "/isdata/cse/bitao/gene_age_mar_2017/ref_genome/Lnig/Lnig",
+    "libType": "A",
+    "mates1": [
+        "/isdata/cse/bitao/gene_age_mar_2017/raw_data/Lnig/Lnig_8/SRR5195089_1.fastq",
+        "/isdata/cse/bitao/gene_age_mar_2017/raw_data/Lnig/Lnig_8/SRR5195090_1.fastq"
+    ],
+    "mates2": [
+        "/isdata/cse/bitao/gene_age_mar_2017/raw_data/Lnig/Lnig_8/SRR5195089_2.fastq",
+        "/isdata/cse/bitao/gene_age_mar_2017/raw_data/Lnig/Lnig_8/SRR5195090_2.fastq"
+    ],
+    "seqBias": [],
+    "gcBias": [],
+    "threads": "10",
+    "output": "quants/Lnig_8",
+    "auxDir": "aux_info"
+}

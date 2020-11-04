@@ -1,0 +1,22 @@
+{
+    "read_files": "( /seqdata/krogh/cse/bitao/gene_age_mar_2017/raw_data/sorted/Lhum/Lhum_6/170325_I133_FCHGL5TBBXX_L5_RDWHANTosqDAARRAAPEI-29/170325_I133_FCHGL5TBBXX_L5_RDWHANTosqDAARRAAPEI-29_1.fq.gz, /seqdata/krogh/cse/bitao/gene_age_mar_2017/raw_data/sorted/Lhum/Lhum_6/170325_I133_FCHGL5TBBXX_L5_RDWHANTosqDAARRAAPEI-29/170325_I133_FCHGL5TBBXX_L5_RDWHANTosqDAARRAAPEI-29_2.fq.gz ), ( /seqdata/krogh/cse/bitao/gene_age_mar_2017/raw_data/sorted/Lhum/Lhum_6/170325_I133_FCHGL5TBBXX_L6_RDWHANTosqDAARRAAPEI-29/170325_I133_FCHGL5TBBXX_L6_RDWHANTosqDAARRAAPEI-29_1.fq.gz, /seqdata/krogh/cse/bitao/gene_age_mar_2017/raw_data/sorted/Lhum/Lhum_6/170325_I133_FCHGL5TBBXX_L6_RDWHANTosqDAARRAAPEI-29/170325_I133_FCHGL5TBBXX_L6_RDWHANTosqDAARRAAPEI-29_2.fq.gz )",
+    "expected_format": "IU",
+    "compatible_fragment_ratio": 0.9965015048386858,
+    "num_compatible_fragments": 8164573,
+    "num_assigned_fragments": 8193237,
+    "num_consistent_mappings": 3810779,
+    "num_inconsistent_mappings": 5985183,
+    "strand_mapping_bias": 0.5198608998317666,
+    "MSF": 0,
+    "OSF": 1671,
+    "ISF": 1829704,
+    "MSR": 0,
+    "OSR": 1814,
+    "ISR": 1981075,
+    "SF": 1509741,
+    "SR": 4440910,
+    "MU": 0,
+    "OU": 0,
+    "IU": 0,
+    "U": 0
+}

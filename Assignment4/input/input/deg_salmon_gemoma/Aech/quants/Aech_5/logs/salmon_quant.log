@@ -1,0 +1,51 @@
+[2017-04-11 15:47:14.466] [jointLog] [info] parsing read library format
+[2017-04-11 15:47:14.466] [jointLog] [info] There is 1 library.
+[2017-04-11 15:47:14.582] [jointLog] [info] Loading Quasi index
+[2017-04-11 15:47:14.586] [jointLog] [info] Loading 32-bit quasi index
+[2017-04-11 15:47:16.311] [jointLog] [info] done
+[2017-04-11 15:47:16.311] [jointLog] [info] Index contained 21577 targets
+[2017-04-11 15:47:20.359] [jointLog] [info] Automatically detected most likely library type as IU
+[2017-04-11 15:52:55.757] [jointLog] [info] Computed 23913 rich equivalence classes for further processing
+[2017-04-11 15:52:55.757] [jointLog] [info] Counted 6215813 total reads in the equivalence classes 
+[2017-04-11 15:52:55.761] [jointLog] [info] Mapping rate = 26.4083%
+
+[2017-04-11 15:52:55.761] [jointLog] [info] finished quantifyLibrary()
+[2017-04-11 15:52:55.758] [fileLog] [info] 
+At end of round 0
+==================
+Observed 23537377 total fragments (23537377 in most recent round)
+
+[2017-04-11 15:52:55.940] [jointLog] [info] Starting optimizer
+[2017-04-11 15:52:55.959] [jointLog] [info] Marked 0 weighted equivalence classes as degenerate
+[2017-04-11 15:52:55.961] [jointLog] [info] iteration = 0 | max rel diff. = 281.275
+[2017-04-11 15:52:55.975] [jointLog] [info] iteration 11, adjusting effective lengths to account for biases
+[2017-04-11 15:53:35.895] [jointLog] [info] Computed expected counts (for bias correction)
+[2017-04-11 15:53:35.896] [jointLog] [info] processed bias for 0.0% of the transcripts
+[2017-04-11 15:53:39.740] [jointLog] [info] processed bias for 10.0% of the transcripts
+[2017-04-11 15:53:44.619] [jointLog] [info] processed bias for 20.0% of the transcripts
+[2017-04-11 15:53:49.089] [jointLog] [info] processed bias for 30.0% of the transcripts
+[2017-04-11 15:53:53.392] [jointLog] [info] processed bias for 40.0% of the transcripts
+[2017-04-11 15:53:57.663] [jointLog] [info] processed bias for 50.0% of the transcripts
+[2017-04-11 15:54:01.945] [jointLog] [info] processed bias for 60.0% of the transcripts
+[2017-04-11 15:54:06.276] [jointLog] [info] processed bias for 70.0% of the transcripts
+[2017-04-11 15:54:10.898] [jointLog] [info] processed bias for 80.0% of the transcripts
+[2017-04-11 15:54:15.243] [jointLog] [info] processed bias for 90.0% of the transcripts
+[2017-04-11 15:54:15.733] [jointLog] [info] processed bias for 100.0% of the transcripts
+[2017-04-11 15:54:15.858] [jointLog] [info] iteration = 100 | max rel diff. = 0.111784
+[2017-04-11 15:54:15.993] [jointLog] [info] iteration = 200 | max rel diff. = 0.0513705
+[2017-04-11 15:54:16.126] [jointLog] [info] iteration = 300 | max rel diff. = 0.0375179
+[2017-04-11 15:54:16.257] [jointLog] [info] iteration = 400 | max rel diff. = 0.0270586
+[2017-04-11 15:54:16.388] [jointLog] [info] iteration = 500 | max rel diff. = 0.0187851
+[2017-04-11 15:54:16.518] [jointLog] [info] iteration = 600 | max rel diff. = 0.0181347
+[2017-04-11 15:54:16.649] [jointLog] [info] iteration = 700 | max rel diff. = 0.0147447
+[2017-04-11 15:54:16.782] [jointLog] [info] iteration = 800 | max rel diff. = 0.0147447
+[2017-04-11 15:54:16.915] [jointLog] [info] iteration = 900 | max rel diff. = 0.0112254
+[2017-04-11 15:54:17.049] [jointLog] [info] iteration = 1000 | max rel diff. = 0.0103921
+[2017-04-11 15:54:17.106] [jointLog] [info] iteration = 1044 | max rel diff. = 0.00984728
+[2017-04-11 15:54:17.107] [jointLog] [info] Finished optimizer
+[2017-04-11 15:54:17.107] [jointLog] [info] writing output 
+
+[2017-04-11 15:54:17.809] [jointLog] [warning] NOTE: Read Lib [( /seqdata/krogh/cse/bitao/gene_age_mar_2017/raw_data/sorted/Aech/Aech_5/170325_I133_FCHGL5TBBXX_L7_RDWHANTosqDABARAAPEI-45/170325_I133_FCHGL5TBBXX_L7_RDWHANTosqDABARAAPEI-45_1.fq.gz, /seqdata/krogh/cse/bitao/gene_age_mar_2017/raw_data/sorted/Aech/Aech_5/170325_I133_FCHGL5TBBXX_L7_RDWHANTosqDABARAAPEI-45/170325_I133_FCHGL5TBBXX_L7_RDWHANTosqDABARAAPEI-45_2.fq.gz ), ( /seqdata/krogh/cse/bitao/gene_age_mar_2017/raw_data/sorted/Aech/Aech_5/170325_I133_FCHGL5TBBXX_L8_RDWHANTosqDABARAAPEI-45/170325_I133_FCHGL5TBBXX_L8_RDWHANTosqDABARAAPEI-45_1.fq.gz, /seqdata/krogh/cse/bitao/gene_age_mar_2017/raw_data/sorted/Aech/Aech_5/170325_I133_FCHGL5TBBXX_L8_RDWHANTosqDABARAAPEI-45/170325_I133_FCHGL5TBBXX_L8_RDWHANTosqDABARAAPEI-45_2.fq.gz )] :
+
+Detected a *potential* strand bias > 1% in an unstranded protocol check the file: quants/Aech_5/lib_format_counts.json for details
+

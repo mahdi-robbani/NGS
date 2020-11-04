@@ -1,0 +1,22 @@
+{
+    "read_files": "( /seqdata/krogh/cse/bitao/gene_age_mar_2017/raw_data/sorted/Aech/Aech_12x/170322_I137_FCHHGGYBBXX_L7_RDWHANTosqDABNRAAPEI-62/170322_I137_FCHHGGYBBXX_L7_RDWHANTosqDABNRAAPEI-62_1.fq.gz, /seqdata/krogh/cse/bitao/gene_age_mar_2017/raw_data/sorted/Aech/Aech_12x/170322_I137_FCHHGGYBBXX_L7_RDWHANTosqDABNRAAPEI-62/170322_I137_FCHHGGYBBXX_L7_RDWHANTosqDABNRAAPEI-62_2.fq.gz )",
+    "expected_format": "IU",
+    "compatible_fragment_ratio": 0.9990981020071752,
+    "num_compatible_fragments": 7953809,
+    "num_assigned_fragments": 7960989,
+    "num_consistent_mappings": 6508079,
+    "num_inconsistent_mappings": 4477924,
+    "strand_mapping_bias": 0.49171959959305969,
+    "MSF": 0,
+    "OSF": 2899,
+    "ISF": 3307929,
+    "MSR": 0,
+    "OSR": 2873,
+    "ISR": 3200150,
+    "SF": 1831351,
+    "SR": 2636923,
+    "MU": 0,
+    "OU": 0,
+    "IU": 0,
+    "U": 0
+}

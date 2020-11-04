@@ -1,0 +1,12 @@
+{
+    "salmon_version": "0.11.1",
+    "index": "./Mpha_ERCC",
+    "libType": "A",
+    "mates1": "/isdata/cse/bitao/gene_age_mar_2017/raw_data/Added/Mpha/Mpha_3/180220_X602_FCHHWY5CCXY_L6_RDWHANTosqDAACRAAPEI-11_1.fq.gz",
+    "mates2": "/isdata/cse/bitao/gene_age_mar_2017/raw_data/Added/Mpha/Mpha_3/180220_X602_FCHHWY5CCXY_L6_RDWHANTosqDAACRAAPEI-11_2.fq.gz",
+    "output": "quants/Mpha_3",
+    "threads": "10",
+    "seqBias": [],
+    "gcBias": [],
+    "auxDir": "aux_info"
+}

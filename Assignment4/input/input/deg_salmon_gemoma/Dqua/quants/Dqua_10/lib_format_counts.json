@@ -1,0 +1,22 @@
+{
+    "read_files": "( /seqdata/krogh/cse/bitao/gene_age_mar_2017/raw_data/Dqua/Dqua_10/SRR1519127_1.fastq, /seqdata/krogh/cse/bitao/gene_age_mar_2017/raw_data/Dqua/Dqua_10/SRR1519127_2.fastq )",
+    "expected_format": "IU",
+    "compatible_fragment_ratio": 0.9938035970275776,
+    "num_compatible_fragments": 16793964,
+    "num_assigned_fragments": 16898675,
+    "num_consistent_mappings": 19322545,
+    "num_inconsistent_mappings": 3997722,
+    "strand_mapping_bias": 0.49841457220050469,
+    "MSF": 0,
+    "OSF": 13619,
+    "ISF": 9691907,
+    "MSR": 0,
+    "OSR": 13705,
+    "ISR": 9630638,
+    "SF": 1922257,
+    "SR": 1936743,
+    "MU": 0,
+    "OU": 0,
+    "IU": 0,
+    "U": 0
+}

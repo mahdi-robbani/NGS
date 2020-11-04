@@ -1,0 +1,66 @@
+---
+title: "Assignment 4.3"
+author: "Mahdi"
+date: "11/3/2020"
+output:
+  html_document:
+    df_print: paged
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### We performed batch/species/colony effect correction for the five ant species (A.ech, M.pha, S.inv, L.hum, and L.nig). Try to include also the two queenless ant species in colony effect correction, and report the similarity matrix (Heatmap+Hclustering that we used in the classroom) and PCA result. (Code and Plots, and a briefly discussion about what you see in the plot) (15 points)
+
+```{r}
+# Learn how to correct for batch effect.
+# Learn how to identify differentially expressed genes across batch 
+load('inputData.Rdata')
+source("shared_functions.R")
+
+# Section 2: Using Combat to normalize batch effect.
+
+sampleTable$caste[which(sampleTable$caste == 'Minor_worker')] = 'Worker'  # For simplity, we treat minor worker in A.echinator as worker caste
+normal_ant = which(sampleTable$species %in% c("Aech",'Mpha',"Lhum",'Sinv',"Lnig", "Dqua", "Cbir"))
+ortholog_exp.ant = ortholog_counts[,normal_ant]
+sampleTable.ant = droplevels(sampleTable[normal_ant,])
+ortholog_exp.ant = ortholog_exp.ant[!apply(ortholog_exp.ant, 1, anyNA),]  #Removed genes showing NA (e.g. without expression)
+ortholog_exp.ant.norm = log2(normalize.quantiles(ortholog_exp.ant)+1)
+colnames(ortholog_exp.ant.norm) = colnames(ortholog_exp.ant)
+rownames(ortholog_exp.ant.norm) = rownames(ortholog_exp.ant)
+ortholog_exp.ant.norm = ortholog_exp.ant.norm[apply(ortholog_exp.ant.norm, 1, 
+                                                    FUN = function(x) return(var(x, na.rm = T) > 0)),] 
+
+batch = droplevels(sampleTable.ant$colony) # Normalization for species identity.
+modcombat = model.matrix(~1, data = sampleTable.ant)
+combat.ortholog_exp.ant = ComBat(dat=ortholog_exp.ant.norm, batch=batch, mod=modcombat,
+                             mean.only = F, par.prior=TRUE, prior.plots=FALSE)
+sampleDists.combat = as.dist(1 - cor(combat.ortholog_exp.ant,method = 's'))
+pheatmap(sampleDists.combat,annotation_col = sampleTable.ant[,c(1:3)], 
+         annotation_colors = ann_colors,
+         color = colors) 
+var.gene = order(apply(combat.ortholog_exp.ant,1,var),decreasing = T)[c(1:1000)]
+ortholog_exp.combat.pca <- PCA(t(combat.ortholog_exp.ant[var.gene,]),ncp = 4, graph = FALSE)
+
+# Take a look at the amount of variations explained by each PC.
+fviz_eig(ortholog_exp.combat.pca, addlabels = TRUE,main = 'Explained variance for each PC')
+```
+
+
+
+
+### In the class, we tested the number of differentially expressed genes between gyne and worker (castes) in one of the species using DESeq2. Can you report the number of overlapping DEGs in two, three, four, and all five typical ant species, i.e. Aech Mpha Lhum Lnig and Sinv, similar to the last slide of the class lecture? And how many DEGs have you found if you use the model: Exp ~ Caste + Species + Caste:Species ? Is this number different from the number of overlapping DEGs? Why? (Number of DEGs for the two situations, and a brief discussion about the difference) (15 points)
+
+
+
+
+
+### Besides of using distance measuring method, we can also use factor analysis approach to identify gene modules. Try to extract the weight of genes from PC1 and PC2 of the five ant species (normalized for species identify), and apply that to transform the gene expression data on queenless ant species (Hint: Take a look at http://www.iro.umontreal.ca/~pift6080/H09/documents/papers/pca_tutorial.pdf (Links to an external site.)). [Note: This is similar to train a gene network from the training data set (the five ant species) and test it on the target data set (the queenless ant).] (Code and Plot with the PC data of both the five typical ants and the reconstructed PC data of the two queenless ants, and a brief discussion about the result.) (3.4 points)
+
+
+
+
+
+

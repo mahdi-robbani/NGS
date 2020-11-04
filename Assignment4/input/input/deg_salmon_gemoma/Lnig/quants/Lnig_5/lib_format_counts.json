@@ -1,0 +1,21 @@
+{
+    "read_files": "( /isdata/cse/bitao/gene_age_mar_2017/raw_data/Lnig/Lnig_5/SRR5194941_1.fastq, /isdata/cse/bitao/gene_age_mar_2017/raw_data/Lnig/Lnig_5/SRR5194941_2.fastq ), ( /isdata/cse/bitao/gene_age_mar_2017/raw_data/Lnig/Lnig_5/SRR5194943_1.fastq, /isdata/cse/bitao/gene_age_mar_2017/raw_data/Lnig/Lnig_5/SRR5194943_2.fastq )",
+    "expected_format": "ISR",
+    "compatible_fragment_ratio": 0.748091962760057,
+    "num_compatible_fragments": 13557922,
+    "num_assigned_fragments": 18123336,
+    "num_consistent_mappings": 13610206,
+    "num_inconsistent_mappings": 4708353,
+    "MSF": 0,
+    "OSF": 174,
+    "ISF": 322258,
+    "MSR": 0,
+    "OSR": 11221,
+    "ISR": 13610206,
+    "SF": 443367,
+    "SR": 3928921,
+    "MU": 0,
+    "OU": 0,
+    "IU": 0,
+    "U": 0
+}

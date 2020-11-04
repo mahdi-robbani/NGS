@@ -1,0 +1,2 @@
+x <- read.table("cafe_out_q1_r1/Base_branch_probabilities.tab") %>% t
+x %>% as_tibble() %>% filter(V2 <= 0.05)

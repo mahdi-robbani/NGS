@@ -1,0 +1,22 @@
+{
+    "read_files": "( /isdata/cse/bitao/gene_age_mar_2017/raw_data/Added/Mpha/Mpha_5/180220_X602_FCHHWY5CCXY_L6_RDWHANTosqDAAERAAPEI-13_1.fq.gz, /isdata/cse/bitao/gene_age_mar_2017/raw_data/Added/Mpha/Mpha_5/180220_X602_FCHHWY5CCXY_L6_RDWHANTosqDAAERAAPEI-13_2.fq.gz ), ( /isdata/cse/bitao/gene_age_mar_2017/raw_data/sorted/Mpha/Mpha_5/170325_I133_FCHGL5TBBXX_L5_RDWHANTosqDAAERAAPEI-13/170325_I133_FCHGL5TBBXX_L5_RDWHANTosqDAAERAAPEI-13_1.fq.gz, /isdata/cse/bitao/gene_age_mar_2017/raw_data/sorted/Mpha/Mpha_5/170325_I133_FCHGL5TBBXX_L5_RDWHANTosqDAAERAAPEI-13/170325_I133_FCHGL5TBBXX_L5_RDWHANTosqDAAERAAPEI-13_2.fq.gz ), ( /isdata/cse/bitao/gene_age_mar_2017/raw_data/sorted/Mpha/Mpha_5/170325_I133_FCHGL5TBBXX_L6_RDWHANTosqDAAERAAPEI-13/170325_I133_FCHGL5TBBXX_L6_RDWHANTosqDAAERAAPEI-13_1.fq.gz, /isdata/cse/bitao/gene_age_mar_2017/raw_data/sorted/Mpha/Mpha_5/170325_I133_FCHGL5TBBXX_L6_RDWHANTosqDAAERAAPEI-13/170325_I133_FCHGL5TBBXX_L6_RDWHANTosqDAAERAAPEI-13_2.fq.gz )",
+    "expected_format": "IU",
+    "compatible_fragment_ratio": 1.0,
+    "num_compatible_fragments": 34877509,
+    "num_assigned_fragments": 34877509,
+    "num_frags_with_consistent_mappings": 22640553,
+    "num_frags_with_inconsistent_or_orphan_mappings": 12258580,
+    "strand_mapping_bias": 0.504856705576052,
+    "MSF": 0,
+    "OSF": 0,
+    "ISF": 11210318,
+    "MSR": 0,
+    "OSR": 0,
+    "ISR": 11430235,
+    "SF": 8686910,
+    "SR": 3571670,
+    "MU": 0,
+    "OU": 0,
+    "IU": 0,
+    "U": 0
+}

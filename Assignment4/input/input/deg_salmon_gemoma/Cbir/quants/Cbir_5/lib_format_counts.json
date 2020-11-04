@@ -1,0 +1,22 @@
+{
+    "read_files": "( /seqdata/krogh/cse/bitao/gene_age_mar_2017/raw_data/Cbir/Cbir_5/SRR2969436_1.fastq, /seqdata/krogh/cse/bitao/gene_age_mar_2017/raw_data/Cbir/Cbir_5/SRR2969436_2.fastq )",
+    "expected_format": "IU",
+    "compatible_fragment_ratio": 0.9986772540467561,
+    "num_compatible_fragments": 13285034,
+    "num_assigned_fragments": 13302630,
+    "num_consistent_mappings": 17310707,
+    "num_inconsistent_mappings": 2895370,
+    "strand_mapping_bias": 0.5059703800659327,
+    "MSF": 0,
+    "OSF": 8105,
+    "ISF": 8552002,
+    "MSR": 0,
+    "OSR": 7465,
+    "ISR": 8758705,
+    "SF": 1386318,
+    "SR": 1488832,
+    "MU": 0,
+    "OU": 0,
+    "IU": 0,
+    "U": 0
+}

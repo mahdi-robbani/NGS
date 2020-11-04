@@ -1,0 +1,22 @@
+{
+    "read_files": "( /seqdata/krogh/cse/bitao/gene_age_mar_2017/raw_data/Sinv/Sinv_1/ST-EG04_GCCAAT_L001_R1.fastq, /seqdata/krogh/cse/bitao/gene_age_mar_2017/raw_data/Sinv/Sinv_1/ST-EG04_GCCAAT_L001_R2.fastq ), ( /seqdata/krogh/cse/bitao/gene_age_mar_2017/raw_data/Sinv/Sinv_1/ST_EG04_GCCAAT_L004_R1.fastq, /seqdata/krogh/cse/bitao/gene_age_mar_2017/raw_data/Sinv/Sinv_1/ST_EG04_GCCAAT_L004_R2.fastq ), ( /seqdata/krogh/cse/bitao/gene_age_mar_2017/raw_data/Sinv/Sinv_1/ST-EG04_GCCAAT_L007_R1.fastq, /seqdata/krogh/cse/bitao/gene_age_mar_2017/raw_data/Sinv/Sinv_1/ST-EG04_GCCAAT_L007_R2.fastq )",
+    "expected_format": "IU",
+    "compatible_fragment_ratio": 0.9970509223689941,
+    "num_compatible_fragments": 16203595,
+    "num_assigned_fragments": 16251522,
+    "num_consistent_mappings": 18788953,
+    "num_inconsistent_mappings": 3732855,
+    "strand_mapping_bias": 0.4979780938299223,
+    "MSF": 0,
+    "OSF": 4074,
+    "ISF": 9432466,
+    "MSR": 0,
+    "OSR": 4006,
+    "ISR": 9356487,
+    "SF": 1828440,
+    "SR": 1838710,
+    "MU": 0,
+    "OU": 0,
+    "IU": 0,
+    "U": 0
+}

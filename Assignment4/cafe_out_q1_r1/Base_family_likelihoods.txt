@@ -1,0 +1,2 @@
+#FamilyID	Likelihood of Family
+OBPs	-80.676

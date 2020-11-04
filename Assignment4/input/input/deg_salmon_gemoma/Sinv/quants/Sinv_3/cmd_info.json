@@ -1,0 +1,18 @@
+{
+    "salmon_version": "0.8.2",
+    "index": "/seqdata/krogh/cse/bitao/gene_age_mar_2017/ref_genome/Sinv/Sinv",
+    "libType": "A",
+    "mates1": [
+        "/seqdata/krogh/cse/bitao/gene_age_mar_2017/raw_data/Sinv/Sinv_3/ST_EG06_AGTTCC_L004_R1.fastq",
+        "/seqdata/krogh/cse/bitao/gene_age_mar_2017/raw_data/Sinv/Sinv_3/ST-EG06_AGTTCC_L007_R1.fastq"
+    ],
+    "mates2": [
+        "/seqdata/krogh/cse/bitao/gene_age_mar_2017/raw_data/Sinv/Sinv_3/ST_EG06_AGTTCC_L004_R2.fastq",
+        "/seqdata/krogh/cse/bitao/gene_age_mar_2017/raw_data/Sinv/Sinv_3/ST-EG06_AGTTCC_L007_R2.fastq"
+    ],
+    "seqBias": [],
+    "gcBias": [],
+    "threads": "10",
+    "output": "quants/Sinv_3",
+    "auxDir": "aux_info"
+}

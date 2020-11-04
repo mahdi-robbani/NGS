@@ -1,0 +1,12 @@
+{
+    "salmon_version": "0.8.2",
+    "index": "/isdata//cse/bitao/gene_age_mar_2017/ref_genome/Pcan/Pcan",
+    "libType": "A",
+    "mates1": "/isdata/cse/bitao/Download/P_can/Pcan76b/SRR1519112_1.fastq",
+    "mates2": "/isdata/cse/bitao/Download/P_can/Pcan76b/SRR1519112_2.fastq",
+    "seqBias": [],
+    "gcBias": [],
+    "threads": "10",
+    "output": "quants/Pcan76b",
+    "auxDir": "aux_info"
+}

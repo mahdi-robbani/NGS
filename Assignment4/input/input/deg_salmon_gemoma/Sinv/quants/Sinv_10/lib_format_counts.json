@@ -1,0 +1,22 @@
+{
+    "read_files": "( /seqdata/krogh/cse/bitao/gene_age_mar_2017/raw_data/Sinv/Sinv_10/LTF_GK02_345bp_TGACCA_L005_R1.fastq.gz, /seqdata/krogh/cse/bitao/gene_age_mar_2017/raw_data/Sinv/Sinv_10/LTF_GK02_345bp_TGACCA_L005_R2.fastq.gz )",
+    "expected_format": "IU",
+    "compatible_fragment_ratio": 0.995281490635179,
+    "num_compatible_fragments": 12103662,
+    "num_assigned_fragments": 12161044,
+    "num_consistent_mappings": 13232837,
+    "num_inconsistent_mappings": 3398655,
+    "strand_mapping_bias": 0.49262233034382577,
+    "MSF": 0,
+    "OSF": 3938,
+    "ISF": 6714046,
+    "MSR": 0,
+    "OSR": 3767,
+    "ISR": 6518791,
+    "SF": 1657334,
+    "SR": 1663550,
+    "MU": 0,
+    "OU": 0,
+    "IU": 0,
+    "U": 0
+}

@@ -1,0 +1,2 @@
+Model Base Result: 80.676
+Lambda: 0.0033333335447569

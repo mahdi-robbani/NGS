@@ -1,0 +1,12 @@
+{
+    "salmon_version": "0.8.2",
+    "index": "/seqdata/krogh/cse/bitao/gene_age_mar_2017/ref_genome/Aech/Aech",
+    "libType": "A",
+    "mates1": "/seqdata/krogh/cse/bitao/gene_age_mar_2017/raw_data/sorted/Aech/Aech_10x/170322_I137_FCHHGGYBBXX_L7_RDWHANTosqDABMRAAPEI-61/170322_I137_FCHHGGYBBXX_L7_RDWHANTosqDABMRAAPEI-61_1.fq.gz",
+    "mates2": "/seqdata/krogh/cse/bitao/gene_age_mar_2017/raw_data/sorted/Aech/Aech_10x/170322_I137_FCHHGGYBBXX_L7_RDWHANTosqDABMRAAPEI-61/170322_I137_FCHHGGYBBXX_L7_RDWHANTosqDABMRAAPEI-61_2.fq.gz",
+    "seqBias": [],
+    "gcBias": [],
+    "threads": "10",
+    "output": "quants/Aech_10x",
+    "auxDir": "aux_info"
+}

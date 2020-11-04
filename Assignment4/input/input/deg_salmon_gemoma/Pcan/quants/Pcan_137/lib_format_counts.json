@@ -1,0 +1,21 @@
+{
+    "read_files": "( /isdata/cse/bitao/Download/P_can/Pcan137/SRR1519114_1.fastq, /isdata/cse/bitao/Download/P_can/Pcan137/SRR1519114_2.fastq )",
+    "expected_format": "ISR",
+    "compatible_fragment_ratio": 0.8053647591043325,
+    "num_compatible_fragments": 5073020,
+    "num_assigned_fragments": 6299034,
+    "num_consistent_mappings": 10245877,
+    "num_inconsistent_mappings": 2108402,
+    "MSF": 0,
+    "OSF": 13,
+    "ISF": 61702,
+    "MSR": 0,
+    "OSR": 3828,
+    "ISR": 10245877,
+    "SF": 112159,
+    "SR": 1927749,
+    "MU": 0,
+    "OU": 0,
+    "IU": 0,
+    "U": 0
+}
