@@ -12,7 +12,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ### Why would one want to experiment with excluding third codon positions in protein-coding data for phylogenetic inference? (1 sentence suffices, 5 points)
 
-Since mutations in the third codon can result in the same amino acid, for a given sequence, all third codon positions will have a higher frequency of mutations which lead to phylogenetic itnerference.
+Since mutations in the third codon can result in the same amino acid, for a given sequence, all third codon positions will have a higher frequency of mutations which lead to phylogenetic interference.
 
 ### Paste the IQ-TREE command here (3 points) 
 
@@ -78,12 +78,15 @@ MbaARCHEO:0.0109494277)100:0.0660343280)93:0.0091810400,(CliZYGEN:
 
 
 ### Looking at the clade formed by terminals ending in XxxDIPLUR (short for Diplura or bristletails), which clade is their sister group? (List the terminal names of the sister group. 5 points).
+
 The terminal names are PaqCOLL, OimCOLL and Tom2COLL.
 
 ### Looking at the terminals ending in XxxNEOPT (short for Neoptera, a group of winged insects), does this tree support that Neoptera are a monophyletic group (= a clade)? (Answer with Yes/No. 5 points).
+
 Yes, they include only terminals with NEOPT.
 
 ### Looking at the terminals ending in XxxARACH (short for Arachnida, spiders), does this tree support that spiders are a monophyletic group (= a clade)? (Answer with Yes/No. 5 points).
+
 No, they include terminals with XIPHOS.
 
 
