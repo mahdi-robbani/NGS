@@ -1,0 +1,8 @@
+"0","var.gene = order(apply(combat.ortholog_exp.ant,1,var),decreasing = T)[c(1:1000)]"
+"0","ortholog_exp.combat.pca <- PCA(t(combat.ortholog_exp.ant[var.gene,]),ncp = 4, graph = FALSE)"
+"0","# Take a look at the amount of variations explained by each PC."
+"0","fviz_eig(ortholog_exp.combat.pca, addlabels = TRUE,main = 'Explained variance for each PC')"
+"2","Registered S3 method overwritten by 'data.table':
+  method           from
+  print.data.table     
+"
