@@ -1,0 +1,45 @@
+---
+title: "Week5rExercise2"
+author: "Michael Widdowson, klh272@alumni.ku.dk"
+date: "9/29/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library("msa")
+#library("seqinr")
+library("tidyverse")
+library("Biostrings")
+```
+
+
+```{r}
+bright_data <- read.table('bright_GFP_beads.counts', stringsAsFactors=F)
+colnames(bright_data) <- c("count", "sequence")
+head(bright_data)
+dim_data <- read.table('dim_GFP_beads.counts', stringsAsFactors=F)
+colnames(dim_data) <- c("count", "sequence")
+head(dim_data)
+```
+
+```{r}
+
+
+bright_data$sequence[1]
+strsplit(bright_data$sequence[1], "")
+
+bright_data$sequence[1]
+
+Biostrings::translate(DNAString(bright_data$sequence[1]))
+
+  
+translate(DNAString(bright_data$sequence[1]))
+
+translate(toString(DNAString(bright_data$sequence[1])))
+
+```
+

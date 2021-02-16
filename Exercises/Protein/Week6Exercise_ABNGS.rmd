@@ -1,0 +1,65 @@
+---
+title: "Week6Exercise_ABNGS"
+author: "Michael Widdowson, klh272@alumni.ku.dk"
+date: "10/5/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+```
+
+```{r}
+# per-variant scores for cellular abundance (‘score’ column)
+vamp_df <- read_csv('vamp_PTEN.csv')
+vamp_df
+dim(vamp_df)
+
+# per-variant scores for phosphatase activity (‘Cumul_score’ column)
+phosph_df <- read_csv('PTEN_phosphatase_MAVE.csv')
+phosph_df
+dim(phosph_df)
+
+# known pathogenic and population variants
+names_df <- read_csv('PTEN_clinvar_gnomad.csv')
+names_df
+dim(names_df)
+```
+
+For each of the pathogenic and population variants, find the abundance and
+phosphatase function scores. Merging data frames might be helpful:
+
+```{r}
+colnames(names_df)[1] <- 'variant'
+temp_df <- merge(vamp_df, names_df, by = "variant", all.x = TRUE, all.y = TRUE) 
+colnames(phosph_df)[1] <- 'variant'
+final_df <- merge(temp_df, phosph_df, by = "variant", all.x = TRUE, all.y = TRUE) 
+final_df
+```
+
+```{r}
+library(ggplot2)
+library(ggrepel)
+
+
+# legend contains: Pathogenic, gnomAD, benign?
+# Another idea: merge datasets and remove all that aren't precense in both
+# Next steps: label data (pathogenic and ...)
+
+# Basic scatter plot
+ggplot(final_df, aes(x=score, y=Cumul_score, label = variant)) + 
+  #geom_text_repel() +
+  geom_point() +
+  theme_bw()
+
+# show cartoon
+# remove resn hoh
+# util.chainbow
+# util.cnc
+# bg_color white
+```
+

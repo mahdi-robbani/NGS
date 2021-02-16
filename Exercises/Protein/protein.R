@@ -21,6 +21,7 @@ n_mutates <- function(dna, n){
 
 
 
+
 mutated_dna <- n_mutates(dna$seq, 100)
 mutated_protein <- translate(mutated_dna)
 mutated_protein
@@ -32,3 +33,6 @@ dna_freq <- alphabetFrequency(mutated_dna)[1:4]
 df <- data.frame(Freq=dna_freq) %>% rownames_to_column("Base")
 df %>%
   ggplot(aes(x=Base, y=Freq)) + geom_histogram(stat="identity")
+
+
+

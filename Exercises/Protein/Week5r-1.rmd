@@ -1,0 +1,131 @@
+---
+title: "Week5_ABNGS"
+author: "Michael Widdowson, klh272@alumni.ku.dk"
+date: "9/28/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library("msa")
+library("seqinr")
+library("Biostrings")
+library("rlist")
+```
+
+```{r}
+#Read .fa file
+native_DNA = read.fasta("native_DNA.fa")
+native_DNA$seq <- native_DNA$seq[1:294]
+
+```
+
+```{r}
+#translate it to aa
+native_aa <- translate(native_DNA$seq)
+native_aa
+```
+
+
+
+```{r}
+mutations_DNA <- c("a", "c", "g", "t")
+
+mutation_function <- function(sequence, mutations, iterations){
+  mutations <- mutations
+  
+  val = 0
+ 
+  empty_list <- list()
+    
+  while(val !=  iterations){
+  
+    new_seq <- sequence
+    replace <- sample(mutations, 1)
+    x <- sample(length(new_seq), size =1)
+    #print(x)
+    #print(new_seq)
+    #print(translate(new_seq))
+    
+    new_seq[[x]] <- replace
+    #print(translate(new_seq))
+    val <- val+1
+    #print(val)
+    empty_list[[val]] <- new_seq
+  }
+
+  return(empty_list)
+
+}
+
+
+mutated_DNA_list <- mutation_function(native_DNA$seq, mutations_DNA,1000)
+
+```
+
+```{r}
+# translate to protein
+
+```
+
+
+```{r}
+# translate to protein
+mutated_protein_list <- list()
+i = 0
+while(i != length(mutated_DNA_list)){
+  i <- i+1
+  translation_to_protein <- translate(mutated_DNA_list[[i]])
+  mutated_protein_list[[i]] <- translation_to_protein
+  #gsub()
+}
+
+head(mutated_protein_list)
+
+#translate(mutated_DNA_list[[1]])
+```
+
+```{r}
+library(reshape)
+library(tidyverse)
+library(cvms)
+
+#as.data.frame(do.call(rbind, mutated_protein_list))
+#as.data.frame(table(mutated_protein_list[1])) +
+
+aa_matrix <- data.frame(matrix(nrow = 20, ncol = 20))
+colnames(aa_matrix) <- c("A", "R", "N", "D", "C", "Q", "E", "G", "H", "I", "L", "K", "M", "F", "P", "S", "T", "W", "Y", "V")
+rownames(aa_matrix) <- c("A", "R", "N", "D", "C", "Q", "E", "G", "H", "I", "L", "K", "M", "F", "P", "S", "T", "W", "Y", "V")
+aa_matrix
+
+if(aa_matrix$R != aa_matrix$R)
+
+native_aa
+data.frame(do.call(rbind, mutated_protein_list))
+
+
+while(i < 2){
+  while(j < 10){
+    if(aa_matrix[i,] != aa_matrix[,j])
+  }
+}
+
+#mutations_counts <- melt(table(do.call(rbind, mutated_protein_list)))
+#native_counts <- melt(table(native_aa))
+#native_counts[nrow(native_counts) + 1,] = c("C", 0)
+#native_counts[nrow(native_counts) + 1,] = c("W", 0)
+
+#native_counts
+#mutations_counts
+
+#native_aa
+```
+```{r}
+plot()
+```
+
+
+
