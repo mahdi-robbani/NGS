@@ -1,8 +1,0 @@
-"0","keep <- maf >= 0.05 & missing_count == 0"
-"0","snps_filtered <- snps[keep,]"
-"0","dim(snps_filtered)"
-"1","[1]"
-"1","  32"
-"1"," 462"
-"1","
-"

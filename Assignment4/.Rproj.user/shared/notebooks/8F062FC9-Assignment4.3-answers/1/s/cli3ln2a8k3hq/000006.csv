@@ -1,6 +1,0 @@
-"0","pca.combat.var = ortholog_exp.combat.pca$eig"
-"0","pca.combat.data = cbind(ortholog_exp.combat.pca$ind$coord,sampleTable.ant)"
-"0","ggplot(pca.combat.data, aes(x = Dim.1, y = Dim.2, color = caste, shape = species)) +"
-"0","  geom_point(size=3) +"
-"0","  coord_fixed()+"
-"0","  theme_bw()"

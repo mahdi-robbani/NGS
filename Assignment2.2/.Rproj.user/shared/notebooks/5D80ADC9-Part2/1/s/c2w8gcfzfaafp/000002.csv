@@ -1,6 +1,0 @@
-"0","cis_eqtls$p.adj <- p.adjust(cis_eqtls$pvalue, method = ""bonferroni"")"
-"0","sum(cis_eqtls$p.adj <= 0.05)"
-"1","[1]"
-"1"," 71"
-"1","
-"

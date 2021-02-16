@@ -1,6 +1,0 @@
-"0","trans_eqtls$p.adj <- p.adjust(trans_eqtls$pvalue, method = ""bonferroni"")"
-"0","sum(trans_eqtls$p.adj <= 0.05)"
-"1","[1]"
-"1"," 0"
-"1","
-"
