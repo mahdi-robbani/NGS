@@ -1,2 +1,0 @@
-"0","freq <- read.table(""assign3.fopt.gz"")"
-"0","info[info$V2 == ""NA12750"",]"

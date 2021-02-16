@@ -1,5 +1,0 @@
-"0","#3"
-"0","beagle_probs <- read.table(""imputation.input.gz.gprobs.gz"", header = T)"
-"0","posterior_3 <- get_columns(beagle_probs, ind)"
-"0","called_geno_3 <- apply(posterior_3, 1, max)"
-"0","hist(called_geno_3)"
