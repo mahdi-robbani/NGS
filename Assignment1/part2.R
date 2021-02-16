@@ -50,7 +50,7 @@ get_new_thetas <- function(bases_vector, errors_vector){
 #get_new_thetas(bases[[302]], errors[[302]])
 
 #load file
-dat <- read.delim("MTnice.pileup", as.is=T, comment.char="", head=F, quote="")
+dat <- read.delim("data/MTnice.pileup", as.is=T, comment.char="", head=F, quote="")
 names(dat) <- c("CHR","POS","REF", c("depth","bases","Qscore"))
 
 ## bases for individual 1 as a list
