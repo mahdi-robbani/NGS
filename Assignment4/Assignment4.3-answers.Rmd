@@ -83,7 +83,7 @@ get_dif_exp_genes <- function(target_species, model=1){
   } else{
     dds <- DESeqDataSetFromMatrix(
       ortholog_counts.ant.norm[,which(sampleTable.ant$species %in% target_species)], sampleTable.ant[which(sampleTable.ant$species %in% target_species),],
-      design = ~caste +species+caste:species)
+      design = ~caste +species)
   }
   dds = DESeq(dds)
   res.aech = results(dds, contrast = c("caste",c("Gyne",'Worker')),alpha = 0.05)
@@ -135,7 +135,7 @@ print(paste("DEGs in Model 2:", m2_dim[1]))
 
 ```
 
-The first model results in only 17 genes that overlap for all 5 species, but the second model shows 434 genes overlap. Even after trying to correct for the effect of species on the gene transcription, some effect still remains. This means different genes will be expressed for different species, so some genes may be differentially expresssed in some species while not in others. These genes will be missed by the first model but captured by the second model since the second model takes the effect of species into account.
+The first model results in only 17 genes that overlap for all 5 species, but the second model shows 1489 genes overlap. Even after trying to correct for the effect of species on the gene transcription, some effect still remains. This means different genes will be expressed for different species, so some genes may be differentially expresssed in some species while not in others. These genes will be missed by the first model but captured by the second model since the second model takes the effect of species into account.
 
 
 ### Besides of using distance measuring method, we can also use factor analysis approach to identify gene modules. Try to extract the weight of genes from PC1 and PC2 of the five ant species (normalized for species identify), and apply that to transform the gene expression data on queenless ant species (Hint: Take a look at http://www.iro.umontreal.ca/~pift6080/H09/documents/papers/pca_tutorial.pdf (Links to an external site.)). [Note: This is similar to train a gene network from the training data set (the five ant species) and test it on the target data set (the queenless ant).] (Code and Plot with the PC data of both the five typical ants and the reconstructed PC data of the two queenless ants, and a brief discussion about the result.) (3.4 points)
